@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title</title>
+
+    @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
+
+    <!-- Primary vendor style -->
+    @System.Web.Optimization.Styles.Render("~/bundles/font-awesome/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/animate/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/bootstrap/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/peicon7stroke/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/newdatetimepicker/css")
+
+    <link rel="stylesheet" href="~/Content/MyMain.css" />
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Primary HOMER style -->
+    @System.Web.Optimization.Styles.Render("~/bundles/homer/css")
+
+
+
+    <!-- Section for main scripts render -->
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Vue/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/homer/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/moment/js")
+
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/newdatetimepicker/js")
+
+
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+</head>
+<body class="@Html.PageClass()">
+
+    <!-- Simple splash screen-->
+    <div class="splash">
+        <div class="color-line">
+        </div>
+        <div class="splash-title">
+            <h1>MyProject for MSC project</h1>
+            @*<p>Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel. </p>*@
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div> <div class="rect3"></div>
+                <div class="rect4"></div> <div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+    <!--[if lt IE 7]>
+    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Header -->
+    <div id="header">
+        @Html.Partial("_Header")
+    </div>
+
+    <!-- Navigation -->
+    <aside id="menu">
+        @Html.Partial("_Navigation")
+    </aside>
+
+    <!-- Main view  -->
+    <div id="wrapper">
+        @RenderBody()
+
+        <!-- Footer-->
+        @Html.Partial("_Footer")
+    </div>
+
+  
+</body>
+</html>

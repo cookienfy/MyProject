@@ -1,0 +1,39 @@
+﻿<div id="navigation">
+    @*<div class="profile-picture">
+
+            <div class="stats-label text-color">
+                <span class="font-extra-bold font-uppercase">Username</span>
+
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <small class="text-muted">Title <b class="caret"></b></small>
+                    </a>
+                    <ul class="dropdown-menu animated flipInX m-t-xs">
+                        <li><a href="#">Link 1</a></li>
+                        <li><a href="#">Link 2</a></li>
+                        <li><a href="#">Link 3</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+    <ul class="nav metismenu" id="side-menu">
+        <li class="@Html.IsSelected(action: "Index")">
+            <a href="@Url.Action("Index", "Home")"> <span class="nav-label">Project</span> </a>
+        </li>
+        @*<li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "jqGrid")"> <span class="nav-label">Page 2</span> </a>
+            </li>
+            <li class="@Html.IsSelected(action: "JqGridBootstrapIndex")">
+                <a href="@Url.Action("JqGridBootstrapIndex", "jqGrid")"> <span class="nav-label">Bootstrap jqGrid</span> </a>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "DataTables")"> <span class="nav-label">DataTables</span> </a>
+            </li>*@
+
+        @*<li class="@Html.IsSelected(action: "PlusingIndex")">
+                <a href="@Url.Action("PlusingIndex", "Home")"> <span class="nav-label">Plusing Test</span> <span class="label label-success pull-right">Start</span> </a>
+            </li>*@
+
+    </ul>
+</div>

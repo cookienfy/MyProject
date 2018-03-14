@@ -1,0 +1,256 @@
+﻿@model MyProject.DAL.Models.ProjectModel
+@{
+    ViewBag.Title = "ProjectDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="normalheader transition animated fadeInUp small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <a class="small-header-action" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+            </a>
+
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                    <li>
+                        <span>App views</span>
+                    </li>
+                    <li class="active">
+                        <span>ProjectDetail</span>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Projects
+            </h2>
+            <small>List of projects.</small>
+        </div>
+    </div>
+</div>
+
+
+<div class="content animated fadeInUp animate-panel">
+    <div class="hpanel">
+        <div class="panel-body">
+
+            <div id="dvProject" class="form-horizontal">
+                @*Project Name*@
+                <div class="form-group">
+                    <label for="inputProjectName" class="col-sm-3 control-label">Project Name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputProjectName" placeholder="Please input your project name" v-model="project.ProjectName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selPriority" class="col-sm-3 control-label">Priority:</label>
+                    <div class="col-sm-6">
+                        <select id="selPriority" class="form-control" v-model="project.Priority">
+                            <option v-for="c in codes" v-bind:value="c.CodeId">{{c.Code}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selDL" class="col-sm-3 control-label">Difficult Level:</label>
+                    <div class="col-sm-6">
+                        <select id="selDL" class="form-control" v-model="project.DifficultLevel">
+                            <option v-for="c in codes" v-bind:value="c.CodeId">{{c.Code}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputReqBy" class="col-sm-3 control-label">Request By:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputReqBy" placeholder="Please input request by" v-model="project.requestBy">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUser" class="col-sm-3 control-label">User:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputUser" v-model="project.User" placeholder="Please input">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEstFinishDate" class="col-sm-3 control-label">Estimate Finish Date:</label>
+                    <div class="col-sm-6">
+                        <div id="inputEstFinishDate" class='input-group date'>
+                            <input type="text" class="form-control" v-model="project.EstimateFinishDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputActFinishDate" class="col-sm-3 control-label">Actual Finish Date:</label>
+                    <div class="col-sm-6">
+                        <div id="inputActFinishDate" class='input-group date'>
+                            <input type="text" class="form-control" v-model="project.ActualFinishDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputWorkTeam" class="col-sm-3 control-label">Work Team:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputWorkTeam" placeholder="Please input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDesc" class="col-sm-3 control-label">Description:</label>
+                    <div class="col-sm-6">
+                        <textarea id="inputDesc" class="form-control" rows="6"></textarea>
+                    </div>
+                </div>
+
+               
+
+
+                @*<div class="form-group">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>*@
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-6">
+                        <button id="btnSave" class="btn btn-default">Sign in</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+
+
+
+    var selEstDate = null;
+
+    $(function () {
+
+
+        app.initDateTimePickerCtrl();
+        app.initCode();
+
+        $('#btnSave').on('click', function () {
+            app.getValue();
+            //alert(app.project.Priority);
+
+        });
+
+    })
+
+
+    var app = new Vue({
+        el: '#dvProject',
+        data: {
+            codes: [],
+            project: {
+                ProjectName: '@Model.ProjectName',
+                requestBy: '@Model.RequestBy',
+                User: '@Model.Users',
+                Priority: '@Model.Priority',
+                DifficultLevel: '@Model.DifficultLevel',
+                EstimateFinishDate: '@Model.EstimateFinishDate.ToString("yyyy-MM-dd")',
+                ActualFinishDate: '@Model.ActualFinishDate.ToString("yyyy-MM-dd")'
+            }
+        },
+        methods: {
+            ///init
+            initDateTimePickerCtrl: function () {
+                var option = {
+                    format: 'YYYY-MM-DD',
+                    minDate: moment().format('YYYY-MM-DD'),
+                    //maxDate: '2018-02-01',
+                    sideBySide: false,
+                    showClear: true
+                };
+
+
+                var estDate = $('#inputEstFinishDate');
+                estDate.datetimepicker(option);
+
+                var actDate = $('#inputActFinishDate');
+                actDate.datetimepicker(option);
+            },
+            initCode: function () {
+                $.post(
+                    '@Url.Action("GetCode", "Home")',
+                    { 'value':'Priority' },
+                    function (d) {
+                        app.codes = [];
+                        app.codes.push({ 'CodeId': 0, 'Code':'' });
+
+                        for (i in d.data)
+                            app.codes.push(d.data[i]);
+
+                        //var selPriority = $('#selPriority');
+                        //selPriority.html('');
+                        //selPriority.append("<option value='0'></option>");
+                        //$.each(d.data, function (i, item) {
+                        //    selPriority.append("<option value='" + item.CodeId + "'>&nbsp;" + item.Code + "</option>");
+                        //});
+
+
+                },'json');
+            },
+
+            //DateTimePicker contrl
+            getDateTimePickerDate: function () {
+                var actDate = $('#inputActFinishDate');
+                var estDate = $('#inputEstFinishDate');
+                this.project.EstimateFinishDate = estDate.data('date');
+                this.project.ActualFinishDate = actDate.data('date');
+            },
+            setDateTimePickerDate: function (ctlDate, value) {
+                ctlDate.data('DateTimePicker').date(value);
+            },
+
+            getValue: function () {
+                this.getDateTimePickerDate();
+                alert(this.project.ActualFinishDate + ' - ' + this.project.ProjectName + this.project.requestBy);
+
+            },
+            setValue: function () {
+                this.project.ProjectName = "ffffff";
+                this.project.requestBy = "Edwin";
+                this.project.ActualFinishDate = '2018-03-22';
+                this.project.EstimateFinishDate = '2018-03-22';
+                this.project.User = "Joe";
+                this.project.Priority = 2;
+                this.project.DifficultLevel = 1;
+                this.setDateTimePickerDate($('#inputEstFinishDate'), this.project.EstimateFinishDate);
+                this.setDateTimePickerDate($('#inputActFinishDate'), this.project.ActualFinishDate);
+            }
+
+        }
+
+    });
+
+
+</script>

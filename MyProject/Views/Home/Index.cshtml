@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="normalheader transition animated fadeInUp small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <a class="small-header-action" href="">
+                <div class="clip-header">
+                    <i class="fa fa-arrow-up"></i>
+                </div>
+            </a>
+
+            <div id="hbreadcrumb" class="pull-right">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                    <li>
+                        <span>App views</span>
+                    </li>
+                    <li class="active">
+                        <span>MyProjects</span>
+                    </li>
+                </ol>
+            </div>
+            <h2 class="font-light m-b-xs">
+                Projects
+            </h2>
+            <small>List of projects.</small>
+        </div>
+    </div>
+</div>
+
+<div class="content animated fadeInUp animate-panel">
+    <div class="hpanel">
+        <div class="panel-heading hbuilt">
+            @*<div class="pull-right">
+                    <input id="btnSearch" type="button" class="btn btn-xs btn-default" value="Search" onclick="btn_Search(1)" />
+                    <input id="btnRemove" type="button" class="btn btn-xs btn-default" value="Remove" onclick="btn_Remove()" />
+                </div>*@
+            Query criterias
+        </div>
+        <div class="panel-body">
+
+            <div class="input-group">
+                <input id="txtQuery" class="form-control" type="text" placeholder="Search projects..">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary" onclick="btn_Search(1)"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-danger" onclick="btn_Remove()"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="divTest">
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+
+    })
+
+
+    function btn_Remove() {
+        //$('#divTest').html('<div class="row projects"></div>');
+        //$('#divTest').html('<div id="row1" class="row projects"></div>');
+        //$('#row1').append('<button class="btn btn-default">Search</button>');
+
+        //$("<span>23232</span>").appendTo("#row1");
+
+        //$('#row1').append("<span>44444</span>");
+        alert($('#txtQuery').val());
+        $('#divTest').html("");
+        $('#divTest').removeClass('animated fadeInUp animate-panel');
+    }
+
+    function btn_Search(flag) {
+        $('#divTest').html("");
+        $('#divTest').removeClass('animated fadeInUp animate-panel');
+        $.post('@Url.Action("GetProjects", "Home")',{ name: $('#txtQuery').val() },
+            function (data) {
+
+                var dataLen = data.data.length;
+                if (dataLen < 1)
+                    return;
+                var count = 0;
+                for (var i = 0; i < dataLen; i += 2) {
+                    var rowId = 'row' + count;
+                    $('#divTest').append('<div id="' + rowId + '" class="row projects"></div>');
+                    for (var j = i; j <= i + 1; j++) {
+                        if (j < dataLen)
+                            $('#' + rowId).append('<div id="' + data.data[j].ProjectId + '" class="col-lg-6">' + GetHtml(data.data[j]) + '</div>');
+                    }
+                    count++;
+                }
+                $('#divTest').addClass('animated fadeInUp animate-panel');
+            },'json');
+
+
+        @*$.ajax({
+                url: '@Url.Action("GetProjects", "Home")',
+                data: { name: $('#txtQuery').val() },
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    var aa = 1;
+                }
+            });*@
+
+
+    }
+
+
+    function GetHtml(model) {
+
+        model.RequestBy = model.RequestBy == null ? "Empty" : model.RequestBy;
+        var format_hastime = "YYYY-MM-DD HH:mm:ss";
+        var format_notime = "YYYY-MM-DD";
+        var link = '@Url.Action("ProjectDetail", "Home")?pd=' + window.btoa(model.ProjectId);
+
+        var strVar = "";
+        strVar += "<div class=\"hpanel hgreen\">\n";
+        strVar += "    <div class=\"panel-body\">\n";
+        strVar += "        <div class=\"row\">\n";
+        strVar += "            <div class=\"col-sm-12\">\n";
+        strVar += "                <h4>\n";
+        strVar += "                    <p\">" + model.ProjectName + "<\/p>\n";
+        strVar += "                <\/h4>\n";
+        strVar += "                <p>" + model.Description.substring(0,300) + "...<\/p>\n";
+        strVar += "                <div class=\"row\">\n";
+        strVar += "                    <div class=\"col-sm-3\">\n";
+        strVar += "                        <div class=\"project-label\">RequestBy<\/div>\n";
+        strVar += "                        <small>" + model.RequestBy + "<\/small>\n";
+        strVar += "                    <\/div>\n";
+        strVar += "                    <div class=\"col-sm-3\">\n";
+        strVar += "                        <div class=\"project-label\">VERSION<\/div>\n";
+        strVar += "                        <small>1.5.2<\/small>\n";
+        strVar += "                    <\/div>\n";
+        strVar += "                    <div class=\"col-sm-3\">\n";
+        strVar += "                        <div class=\"project-label\">DEDLINE<\/div>\n";
+        strVar += "                        <small>" + moment(model.ActualFinishDate).format(format_notime)+"<\/small>\n";
+        strVar += "                    <\/div>\n";
+        strVar += "                    <div class=\"col-sm-3\">\n";
+        strVar += "                        <div class=\"project-label\">PROGRESS<\/div>\n";
+        strVar += "                        <div class=\"progress m-t-xs full progress-small\">\n";
+        strVar += "                            <div style=\"width:80%\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"12\" role=\"progressbar\" class=\"progress-bar progress-bar-success\"><\/div>\n";
+        strVar += "                        <\/div>\n";
+        strVar += "                    <\/div>\n";
+        strVar += "                <\/div>\n";
+        strVar += "            <\/div>\n";
+        strVar += "        <\/div>\n";
+        strVar += "    <\/div>\n";
+        strVar += "    <div class=\"panel-footer\">\n";
+        strVar += "            <div class=\"btn-group\">\n";
+        strVar += "                <a class=\"btn btn-xs btn-default\" href=" + link + " target='_blank'>View<\/a>\n";
+        strVar += "                <button class=\"btn btn-xs btn-default\">Edit<\/button>\n";
+        strVar += "                <button class=\"btn btn-xs btn-default\">Delete<\/button>\n";
+        strVar += "            <\/div>\n";
+        strVar += "    <\/div>\n";
+        strVar += "<\/div>\n";
+        return strVar;
+
+    }
+
+
+
+</script>
