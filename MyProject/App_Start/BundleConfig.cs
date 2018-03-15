@@ -15,6 +15,7 @@ namespace MyProject.App_Start
             bundles.Add(new StyleBundle("~/bundles/homer/css").Include(
                       "~/Content/mainstyle.css", new CssRewriteUrlTransform()));
 
+
             // Homer script
             bundles.Add(new ScriptBundle("~/bundles/homer/js").Include(
                       "~/Vendor/metisMenu/dist/metisMenu.min.js",
