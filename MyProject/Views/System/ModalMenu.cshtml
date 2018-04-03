@@ -1,0 +1,65 @@
+﻿<div class="modal fade" id="myModalMenu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+
+            <div class="modal-body">
+                <div id="dvMenu" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputSeq" class="col-sm-3 control-label">Fun Seq:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputSeq" placeholder="Please input your function sequence" v-bind:value="menu.FunSeq" v-model="menu.FunSeq">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFunName" class="col-sm-3 control-label">Fun Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputFunName" placeholder="Please input your function name" v-model="menu.FunName">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputFunLink" class="col-sm-3 control-label">Fun Link:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputFunLink" placeholder="Please input your function link" v-model="menu.FunLink">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputFunPic" class="col-sm-3 control-label">Fun Pic:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputFunPic" placeholder="Please input your function picture" v-model="menu.FunPic">
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                        <label for="selParent" class="col-sm-3 control-label">Fun Parent:</label>
+                        <div class="col-sm-9">
+                            <select id="selPriority" class="form-control" v-model="menu.FunParentId">
+                                <option v-for="c in functions" v-bind:value="c.FunId">{{c.FunName}}</option>
+                            </select>
+                        </div>
+                    </div>*@
+
+                    <div class="form-group">
+                        <label for="selType" class="col-sm-3 control-label">Function Type:</label>
+                        <div class="col-sm-9">
+                            <select id="selType" class="form-control" v-model="menu.FunTypeId">
+                                <option v-for="c in codes" v-bind:value="c.CodeId">{{c.Code}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

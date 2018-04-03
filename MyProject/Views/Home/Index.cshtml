@@ -37,9 +37,9 @@
     <div class="hpanel">
         <div class="panel-heading hbuilt">
             @*<div class="pull-right">
-                    <input id="btnSearch" type="button" class="btn btn-xs btn-default" value="Search" onclick="btn_Search(1)" />
-                    <input id="btnRemove" type="button" class="btn btn-xs btn-default" value="Remove" onclick="btn_Remove()" />
-                </div>*@
+                <input id="btnSearch" type="button" class="btn btn-xs btn-default" value="Search" onclick="btn_Search(1)" />
+                <input id="btnRemove" type="button" class="btn btn-xs btn-default" value="Remove" onclick="btn_Remove()" />
+            </div>*@
             Query criterias
         </div>
         <div class="panel-body">
@@ -53,11 +53,32 @@
             </div>
         </div>
 
+        <button id="btnNew" class="btn-xs btn-primary" data-toggle="modal" data-target="#newModal">New</button>
+        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="color-line"></div>
+
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
     <div id="divTest">
 
 
     </div>
+
+
+
+
 </div>
 
 

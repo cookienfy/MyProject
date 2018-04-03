@@ -1,61 +1,87 @@
-﻿using System;
+﻿using MyProject.DAL.EF;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
 
 namespace MyProject.DAL
 {
-    public abstract class Repository<T> : IRepository<T>, IDisposable
+    public class Repository<T> : IRepository<T>, IDisposable where T : class
     {
 
-        private const string C_ConnectionStringName = "SqlCon";
+        private DbContext _db;
 
-        protected IDbConnection Connection { get; set; }
+        public virtual DbSet<T> DbSet { get; set; }
 
         public Repository()
         {
-            Connection = GetConnection();
+            CreateConnection();
         }
 
-        public IDbConnection GetConnection()
+        public Repository(DbContext db)
         {
-            var str = System.Configuration.ConfigurationManager.ConnectionStrings[C_ConnectionStringName].ConnectionString;
-            if (string.IsNullOrEmpty(str))
-                throw new ArgumentNullException("Connection string can not null or empty.");
-            IDbConnection con = new MySql.Data.MySqlClient.MySqlConnection(str);
-
-            return con;
+            this._db = db;
         }
 
+        private void CreateConnection()
+        {
+            _db = new EF.MyProjectEF();
+            DbSet = _db.Set<T>();
+        }
 
-        public abstract IEnumerable<T> Query(int Id);
+        public virtual T Add(T model)
+        {
+            var m = DbSet.Add(model);
+            _db.SaveChanges();
+            return m;
+        }
 
-        public abstract IEnumerable<T> Query(IDictionary<string,object> dicParams);
+        public virtual IEnumerable<T> Add(IEnumerable<T> models)
+        {
+            var ms = DbSet.AddRange(models);
+            _db.SaveChanges();
+            return ms;
+        }
 
-        public abstract void Add(T model);
-
-        public abstract void Add(IEnumerable<T> models);
-
-        public abstract void Delete(int id);
-
-        public abstract void Delete(T model);
-
-        public abstract void Update(T model);
+        public virtual void Delete(T model)
+        {
+            if (_db.Entry(model).State == EntityState.Detached)
+            {
+                DbSet.Attach(model);
+            }
+            DbSet.Remove(model);
+            _db.SaveChanges();
+        }
 
         public void Dispose()
         {
-            if (Connection != null)
-            {
-                if (Connection.State == System.Data.ConnectionState.Open)
-                    Connection.Close();
-                Connection.Dispose();
-            }
+            if (_db != null)
+                _db.Dispose();
         }
 
-       
+        public virtual IEnumerable<T> Query(Expression<Func<T, bool>> expWhere, Expression<Func<T, IOrderedQueryable>> expOrder = null)
+        {
+            if (expOrder != null)
+                return DbSet.Where(expWhere).OrderBy(expOrder);
+            else
+                return DbSet.Where(expWhere);
+        }
+
+        public virtual void Update(T model)
+        {
+            DbSet.Attach(model);
+            _db.Entry(model).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
     }
+
+    public class FunctionRepository : Repository<uFunction>
+    {
+    }
+
 }

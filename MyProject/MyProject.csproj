@@ -50,6 +50,12 @@
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -111,6 +117,7 @@
     <Content Include="Content\img\green.png" />
     <Content Include="Content\MyMain.css" />
     <Content Include="Content\mainstyle.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="Global.asax" />
     <Content Include="Icons\pe-icon-7-stroke\css\helper.css" />
     <Content Include="Icons\pe-icon-7-stroke\css\pe-icon-7-stroke.css" />
@@ -163,7 +170,9 @@
     <Content Include="Images\profile.jpg" />
     <Content Include="Scripts\ctrlFileInput.js" />
     <Content Include="Scripts\homer.js" />
+    <Content Include="Scripts\homer2.js" />
     <Content Include="Scripts\PlusingTes.js" />
+    <Content Include="Scripts\ViewMenu.js" />
     <Content Include="Vendor\animate.css\animate.css" />
     <Content Include="Vendor\animate.css\animate.min.css" />
     <Content Include="Vendor\animate.css\Gruntfile.js" />
@@ -2692,6 +2701,7 @@
     <Content Include="Vendor\sweetalert\sweetalert.gif" />
     <Content Include="Vendor\toastr\build\toastr.min.css" />
     <Content Include="Vendor\toastr\build\toastr.min.js" />
+    <Content Include="Vendor\Vue\vue.js" />
     <Content Include="Vendor\Vue\vue.min.js" />
     <Content Include="Vendor\xeditable\bootstrap3-editable\css\bootstrap-editable.css" />
     <Content Include="Vendor\xeditable\bootstrap3-editable\img\clear.png" />
@@ -2718,6 +2728,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3436,6 +3447,8 @@
     <Content Include="Vendor\jasonday-printThis\printThis.jquery.json" />
     <Content Include="Vendor\jasonday-printThis\README.md" />
     <Content Include="Views\Home\ProjectDetail.cshtml" />
+    <Content Include="Views\System\Menu.cshtml" />
+    <Content Include="Views\System\ModalMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

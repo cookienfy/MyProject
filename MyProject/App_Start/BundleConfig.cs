@@ -55,7 +55,7 @@ namespace MyProject.App_Start
 
             // Vue.js
             bundles.Add(new ScriptBundle("~/bundles/Vue/js").Include(
-                      "~/Vendor/Vue/Vue.min.js"));
+                      "~/Vendor/Vue/Vue.js"));
 
             // Flot chart
             bundles.Add(new ScriptBundle("~/bundles/flot/js").Include(
@@ -298,6 +298,10 @@ namespace MyProject.App_Start
             bundles.Add(new StyleBundle("~/bundles/newdatetimepicker/css").Include(
                         "~/Vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css", new CssRewriteUrlTransform()));
 
+
+
+            // Customize global font size
+            bundles.Add(new StyleBundle("~/bundles/MyMain/css").Include("~/Scripts/MyMain.css"));
         }
     }
 }

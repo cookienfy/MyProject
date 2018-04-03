@@ -9,6 +9,10 @@
 
     @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
 
+
+    <!--Customize global font size* -->
+    @*@System.Web.Optimization.Styles.Render("~/bundles/MyMain/css")*@
+
     <!-- Primary vendor style -->
     @System.Web.Optimization.Styles.Render("~/bundles/font-awesome/css")
     @System.Web.Optimization.Styles.Render("~/bundles/animate/css")
@@ -38,10 +42,20 @@
     @System.Web.Optimization.Scripts.Render("~/bundles/newdatetimepicker/js")
 
 
+
     <!-- Handler for local scripts -->
     @RenderSection("scripts", required: false)
+
+
+    @*<style>
+
+        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+            font-size: 11px;
+            line-height: 1;
+        }
+    </style>*@
 </head>
-<body class="@Html.PageClass()">
+<body>
 
     <!-- Simple splash screen-->
     <div class="splash">
@@ -57,6 +71,9 @@
             </div>
         </div>
     </div>
+
+
+
     <!--[if lt IE 7]>
     <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -78,6 +95,6 @@
         @Html.Partial("_Footer")
     </div>
 
-  
+
 </body>
 </html>
