@@ -19,6 +19,7 @@
     @System.Web.Optimization.Styles.Render("~/bundles/bootstrap/css")
     @System.Web.Optimization.Styles.Render("~/bundles/peicon7stroke/css")
     @System.Web.Optimization.Styles.Render("~/bundles/newdatetimepicker/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/treeview/css")
 
     <link rel="stylesheet" href="~/Content/MyMain.css" />
 
@@ -40,6 +41,7 @@
 
 
     @System.Web.Optimization.Scripts.Render("~/bundles/newdatetimepicker/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/treeview/js")
 
 
 
@@ -49,11 +51,11 @@
 
     @*<style>
 
-        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
-            font-size: 11px;
-            line-height: 1;
-        }
-    </style>*@
+            body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+                font-size: 11px;
+                line-height: 1;
+            }
+        </style>*@
 </head>
 <body>
 
@@ -95,6 +97,80 @@
         @Html.Partial("_Footer")
     </div>
 
+    <script type="text/javascript">
 
+        $(function () {
+
+
+
+
+
+
+            var tree = $('#tree').treeview({
+                enableLinks: true,
+                showBorder: true,
+                expandIcon: 'glyphicon glyphicon-chevron-right',
+                collapseIcon: 'glyphicon glyphicon-chevron-down',
+                data: getTree1()
+            });
+
+            tree.on('nodeSelected', function (event, data) {
+                @*@Html.ActionLink()*@
+
+
+            });
+
+        })
+
+        function getTree1() {
+            var json = @Html.Raw(MyProject.Helpers.TreeMenuHelper.GetMenuJson());
+            return json;
+        }
+
+        function getTree() {
+            var data = [
+                {
+                    text: "Parent 1",
+                    nodes: [
+                        {
+                            text: "Child 1",
+                            icon: "fa fa-credit-card",
+                            nodes: [
+                                {
+                                    text: "Grandchild",
+                                    icon: "fa fa-credit-card",
+                                    href: '@Url.Action("Menu", "system")'
+                                },
+                                {
+                                    text: "Grandchild 2"
+                                }
+                            ],
+                            state: {
+                                "checked": false, "disabled": false, "expanded": true, "selected": false
+                            }
+                        },
+                        {
+                            text: "Child 2"
+                        }
+                    ]
+                },
+                {
+                    text: "Parent 2"
+                },
+                {
+                    text: "Parent 3"
+                },
+                {
+                    text: "Parent 4"
+                },
+                {
+                    text: "Parent 5"
+                }
+            ];
+            // Some logic to retrieve, or generate tree structure
+            return data;
+        }
+
+    </script>
 </body>
 </html>

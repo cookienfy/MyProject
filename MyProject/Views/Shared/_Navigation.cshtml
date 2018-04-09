@@ -17,11 +17,11 @@
             </div>
         </div>*@
 
-    <ul class="nav metismenu" id="side-menu">
+    @*<ul class="nav metismenu" id="side-menu">
         <li class="@Html.IsSelected(action: "Index")">
             <a href="@Url.Action("Index", "Home")"> <span class="nav-label">Project</span> </a>
         </li>
-        @*<li class="@Html.IsSelected(action: "Index")">
+        <li class="@Html.IsSelected(action: "Index")">
                 <a href="@Url.Action("Index", "jqGrid")"> <span class="nav-label">Page 2</span> </a>
             </li>
             <li class="@Html.IsSelected(action: "JqGridBootstrapIndex")">
@@ -29,11 +29,13 @@
             </li>
             <li class="@Html.IsSelected(action: "Index")">
                 <a href="@Url.Action("Index", "DataTables")"> <span class="nav-label">DataTables</span> </a>
-            </li>*@
+            </li>
 
-        @*<li class="@Html.IsSelected(action: "PlusingIndex")">
+        <li class="@Html.IsSelected(action: "PlusingIndex")">
                 <a href="@Url.Action("PlusingIndex", "Home")"> <span class="nav-label">Plusing Test</span> <span class="label label-success pull-right">Start</span> </a>
-            </li>*@
+            </li>
 
-    </ul>
+    </ul>*@
+
+    <div id="tree"></div>
 </div>

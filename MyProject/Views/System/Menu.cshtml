@@ -58,6 +58,9 @@
                             FunName
                         </th>
                         <th>
+                            FunPic
+                        </th>
+                        <th>
                             FunLink
                         </th>
                         <th>
@@ -123,6 +126,8 @@
         el: '#dvMenu',
         data: {
             codes: [],
+            functions:[],
+            lcvs:[],
             menu: {
                 FunId: null,
                 FunName: '',
@@ -131,48 +136,72 @@
                 FunParentId: null,
                 FunTypeId: null,
                 FunSeq: null,
+                FunPic: '',
                 LCV: false
             }
         },
         methods: {
-              initCode: function () {
+            initCode: function () {
+
+                //Get Code
                 $.post(
                     '@Url.Action("GetCode", "Home")',
                     { 'value':'FunType' },
                     function (d) {
                         app.codes = [];
                         app.codes.push({ 'CodeId': 0, 'Code':'' });
-
                         for (i in d.data)
                             app.codes.push(d.data[i]);
-                },'json');
+                    }, 'json');
+                //LCV
+
+                app.lcvs = [];
+                app.lcvs.push({ 'text': 'False', 'value': false });
+                app.lcvs.push({ 'text': 'True', 'value': true });
+
+
+                  $.post(
+                    '@Url.Action("GetParentMenus", "System")',
+                    function (d) {
+                        app.functions = [];
+                        app.functions.push({ 'FunId': 0, 'FunName':'' });
+                        for (i in d.data)
+                            app.functions.push(d.data[i]);
+                    }, 'json');
+
+
               },
               saveMenu: function () {
-
                   var aa = 1;
+                  var json = JSON.stringify(this.menu);
+                  var url = app.menu.FunId != null ? '@Url.Action("UpdateMenu", "System")' : '@Url.Action("AddMenu", "System")';
 
                    $.post(
-                       '@Url.Action("SaveMenu", "System")',
+                       url,
                        {
-                           'value': JSON.stringify(this.menu)
+                           'value': json
                        },
                        function (d) {
-                           alert(dd);
+                           if (d.value == 0) {
+                               alert('Save successful.');
+                               $("#myModalMenu").modal('hide');
+                               table.ajax.url('@Url.Action("GetMenuList", "System")').load();
+                           }
+
+
                        },
                        'json');
-
               },
               setFunSeqValue: function (value) {
                   this.menu.FunSeq = value;
               }
         }
-
     });
 
-
+    var table = null;
     $(function () {
 
-         var table = $('#tbMenu').DataTable({
+            table = $('#tbMenu').DataTable({
             "scrollX": false,
             "serverSide": false,
             "processing": true,
@@ -197,6 +226,7 @@
                 { "data": "Action" },
                 { "data": "FunId" },
                 { "data": "FunName" },
+                { "data": "FunPic" },
                 { "data": "FunLink" },
                 { "data": "FunDesc" },
                 { "data": "FunParentId" },
@@ -222,10 +252,15 @@
                     //"</ul>" +
                     // "</div>"
                     "defaultContent": "<button id='btnNew' class='btn btn-xs btn-primary' title='New' type='button'><i class='fa fa-plus'></i></button> " +
-                    "<button id='delrow' class='btn btn-xs btn-primary' type='button' data-toggle='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></button>"
+                    "<button id='btnEdit' class='btn btn-xs btn-primary' type='button' data-toggle='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></button>"
                 },
                 {
-                    "targets": [7],
+                    "targets": [6],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": [8],
                     "visible": false,
                     "searchable": false
                 }
@@ -238,7 +273,18 @@
 
         table.on('click', 'button#btnNew', function () {
             var data = table.row($(this).parents('tr')).data();
-
+            if (app.menu == null || app.menu == undefined) { }
+            else {
+                app.menu.FunId = null;
+                app.menu.FunName = '';
+                app.menu.FunLink = '';
+                app.menu.FunDesc = '';
+                app.menu.FunPic = '';
+                app.menu.FunParentId = null;
+                app.menu.FunTypeId = null;
+                app.menu.FunSeq = null;
+                app.menu.LCV = null;
+            }
             //$.ajax({
             //    type: "POST",
             //    url: "/Booking/GetBookingASTA",
@@ -259,6 +305,21 @@
             //});
 
             $("#myModalMenu").modal("show");
+         });
+
+        table.on('click', 'button#btnEdit', function () {
+            var data = table.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "POST",
+                url: "/System/GetMenu",
+                data: { id: data.FunId },
+                success: function (d) {
+                    $.extend(app.menu, d);
+                    $("#myModalMenu").modal("show");
+
+                }
+            });
+
         });
 
         $("#inputSeq").TouchSpin({

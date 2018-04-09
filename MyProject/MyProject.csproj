@@ -430,6 +430,8 @@
     <Content Include="Vendor\bootstrap-tour\build\js\bootstrap-tour-standalone.min.js" />
     <Content Include="Vendor\bootstrap-tour\build\js\bootstrap-tour.js" />
     <Content Include="Vendor\bootstrap-tour\build\js\bootstrap-tour.min.js" />
+    <Content Include="Vendor\bootstrap-treeview-master\dist\bootstrap-treeview.min.css" />
+    <Content Include="Vendor\bootstrap-treeview-master\dist\bootstrap-treeview.min.js" />
     <Content Include="Vendor\bootstrap.jqgrid-master\css\jquery-ui-1.10.4.custom.css" />
     <Content Include="Vendor\bootstrap.jqgrid-master\css\ui.jqgrid.css" />
     <Content Include="Vendor\bootstrap.jqgrid-master\js\grid.locale-cn.js" />
@@ -2736,6 +2738,7 @@
     <Compile Include="Helpers\EntityHelper.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\TreeMenuHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

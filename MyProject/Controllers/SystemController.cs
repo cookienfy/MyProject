@@ -1,4 +1,5 @@
-﻿using MyProject.DAL.EF;
+﻿using MyProject.DAL;
+using MyProject.DAL.EF;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,27 +18,38 @@ namespace MyProject.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetParentMenus()
+        {
+            using (UnitOfWork work = new UnitOfWork())
+            {
+                var query = work.FunctionRepository.DbSet.Where(p => p.FunTypeId == work.CodeRepository.DbSet.FirstOrDefault(r => r.Code == "Menu").CodeId);
+                IList<object> datas = new List<object>();
+                foreach (var q in query)
+                    datas.Add(new { FunId = q.FunId, FunName = q.FunName });
+
+                return Json(new { data = datas });
+            }
+        }
+
+        [HttpPost]
         public ActionResult GetMenuList()
         {
-            using (var db = new MyProjectEF())
+            using (UnitOfWork work = new UnitOfWork())
             {
-                var queryable = db.uFunctions.Join(db.uCodes,
-                          function => function.FunTypeId,
-                          code => code.CodeId,
-                          (f, c) => new
-                          {
-                              f.FunId,
-                              f.FunName,
-                              f.FunLink,
-                              f.FunDesc,
-                              f.FunParentId,
-                              FunParent = f.FunParentId != null ? db.uFunctions.FirstOrDefault(p => p.FunId == f.FunParentId).FunName : string.Empty,
-                              f.FunTypeId,
-                              FunType = c.Code,
-                              f.FunSeq,
-                              f.LCV
-                          });
-
+                var queryable = work.FunctionRepository.DbSet.Join(work.CodeRepository.DbSet, f => f.FunTypeId, c => c.CodeId, (f, c) => new
+                {
+                    f.FunId,
+                    f.FunName,
+                    f.FunLink,
+                    f.FunDesc,
+                    f.FunPic,
+                    f.FunParentId,
+                    FunParent = f.FunParentId != null ? work.FunctionRepository.DbSet.FirstOrDefault(p => p.FunId == f.FunParentId).FunName : string.Empty,
+                    f.FunTypeId,
+                    FunType = c.Code,
+                    f.FunSeq,
+                    f.LCV
+                });
                 List<object> list = new List<object>();
                 foreach (var q in queryable)
                 {
@@ -49,13 +61,46 @@ namespace MyProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveMenu(string json)
+        public ActionResult GetMenu(int id)
         {
-            var menu = JsonConvert.DeserializeObject<uFunction>(json);
-            
-            return Json(new { status = 0, data = "success" });
+            using (UnitOfWork work = new UnitOfWork())
+            {
+                var menu = work.FunctionRepository.DbSet.FirstOrDefault(p => p.FunId == id);
+                return Json(menu);
+            }
+        }
 
+        [HttpPost]
+        public ActionResult AddMenu(string value)
+        {
+            var jsonSetting = new JsonSerializerSettings();
+            jsonSetting.NullValueHandling = NullValueHandling.Ignore;
 
+            var menu = JsonConvert.DeserializeObject<uFunction>(value, jsonSetting);
+            menu.CreationDate = DateTime.Now;
+            using (UnitOfWork work = new UnitOfWork())
+            {
+                work.FunctionRepository.Add(menu);
+                work.SaveChanges();
+            }
+
+            return Json(new { value = 0 });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateMenu(string value)
+        {
+            var jsonSetting = new JsonSerializerSettings();
+            jsonSetting.NullValueHandling = NullValueHandling.Ignore;
+
+            var menu = JsonConvert.DeserializeObject<uFunction>(value, jsonSetting);
+
+            using (UnitOfWork work = new UnitOfWork())
+            {
+                work.FunctionRepository.Update(menu);
+                work.SaveChanges();
+            }
+            return Json(new { value = 0 });
         }
 
 

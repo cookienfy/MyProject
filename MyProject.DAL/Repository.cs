@@ -25,6 +25,7 @@ namespace MyProject.DAL
         public Repository(DbContext db)
         {
             this._db = db;
+            DbSet = _db.Set<T>();
         }
 
         private void CreateConnection()
@@ -36,14 +37,14 @@ namespace MyProject.DAL
         public virtual T Add(T model)
         {
             var m = DbSet.Add(model);
-            _db.SaveChanges();
+            //_db.SaveChanges();
             return m;
         }
 
         public virtual IEnumerable<T> Add(IEnumerable<T> models)
         {
             var ms = DbSet.AddRange(models);
-            _db.SaveChanges();
+            //_db.SaveChanges();
             return ms;
         }
 
@@ -54,7 +55,7 @@ namespace MyProject.DAL
                 DbSet.Attach(model);
             }
             DbSet.Remove(model);
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
         public void Dispose()
@@ -75,13 +76,22 @@ namespace MyProject.DAL
         {
             DbSet.Attach(model);
             _db.Entry(model).State = EntityState.Modified;
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
     }
 
     public class FunctionRepository : Repository<uFunction>
     {
+        public FunctionRepository(DbContext db) : base(db) { }
     }
 
+
+    public class CodeRepository : Repository<uCode>
+    {
+        public CodeRepository(DbContext db) : base(db)
+        {
+
+        }
+    }
 }

@@ -302,6 +302,14 @@ namespace MyProject.App_Start
 
             // Customize global font size
             bundles.Add(new StyleBundle("~/bundles/MyMain/css").Include("~/Scripts/MyMain.css"));
+
+
+            //treeview bootstrap js
+            bundles.Add(new ScriptBundle("~/bundles/treeview/js").Include(
+                "~/Vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"));
+            //treeview bootstrap css
+            bundles.Add(new StyleBundle("~/bundles/treeview/css").Include(
+               "~/Vendor/bootstrap-treeview-master/dist/bootstrap-treeview.min.css"));
         }
     }
 }

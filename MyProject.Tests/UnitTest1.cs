@@ -170,6 +170,31 @@ namespace MyProject.Tests
             }
 
         }
+
+        [TestMethod]
+        public void RepositoryTest()
+        {
+            UnitOfWork work = new UnitOfWork();
+            var queryable = work.FunctionRepository.DbSet.Join(work.CodeRepository.DbSet, f => f.FunTypeId, c => c.CodeId, (f, c) => new
+            {
+                f.FunId,
+                f.FunName,
+                f.FunLink,
+                f.FunDesc,
+                f.FunParentId,
+                FunParent = f.FunParentId != null ? work.FunctionRepository.DbSet.FirstOrDefault(p => p.FunId == f.FunParentId).FunName : string.Empty,
+                f.FunTypeId,
+                FunType = c.Code,
+                f.FunSeq,
+                f.LCV
+            });
+            foreach (var l in queryable)
+            {
+                Console.Write(l);
+            }
+
+        }
+
         [TestMethod]
         public void GetCode()
         {
@@ -208,7 +233,7 @@ namespace MyProject.Tests
         {
             MyProjectEF db = new MyProjectEF();
 
-            FunctionRepository rep = new FunctionRepository();
+            FunctionRepository rep = new FunctionRepository(db);
 
             var aa = rep.Query(p => p.FunId == 2).FirstOrDefault();
             aa.FunDesc += "111232131";
@@ -217,6 +242,12 @@ namespace MyProject.Tests
 
         }
 
+        [TestMethod]
+        public void TreeMenuHelpTest()
+        {
+            var aa = TreeMenuHelper.GetMenuJson();
+            var b = 1;
+        }
 
         [TestMethod]
         public void CryptographyManagerTest()
