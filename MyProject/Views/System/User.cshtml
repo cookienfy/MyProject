@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "User";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="normalheader transition animated fadeInUp">
+        small-header
+        <div class="hpanel">
+            <div class="panel-body">
+                <a class="small-header-action" href="">
+                    <div class="clip-header">
+                        <i class="fa fa-arrow-up"></i>
+                    </div>
+                </a>
+
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                        <li>
+                            <span>App views</span>
+                        </li>
+                        <li class="active">
+                            <span>MyProjects</span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    Menu
+                </h2>
+                <small>List of menus.</small>
+            </div>
+        </div>
+    </div>*@
+
+<div class="content animated fadeInUp animate-panel">
+    <div class="hpanel">
+
+
+        <button class="btn btn-default" id="mail" addtabs="mail" title="我的消息">
+            添加tab页
+        </button>
+        <button class="btn btn-default" id="mail1" addtabs="mail1" title="我的消息1">
+            添加tab页
+        </button>
+
+        <ul class="nav-tabs nav" id="tabs1">
+            <li class="active"><a href="#tabs-1" id="tab_tabs-1">主页</a></li>
+            <li id="tab_tabs-2"><a href="#tabs-2">tabs2   <i class="fa fa-close" tabclose="tabs-2"></i></a></li>
+            <li id="tab_tabs-3"><a href="#tabs-3">tabs3   <i class="fa fa-close" tabclose="tabs-3"></i></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1">
+                <div class="panel-body">
+                    <strong>Lorem ipsum dolor sit amet, consectetuer adipiscing</strong>
+
+                    <p>
+                        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of
+                        existence in this spot, which was created for the bliss of souls like mine.
+                    </p>
+
+                    <p>
+                        I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at
+                        the present moment; and yet I feel that I never was a greater artist than now. When.
+                    </p>
+
+                </div>
+            </div>
+            <div class="tab-pane" id="tabs-2">
+                <div class="panel-body">
+                    <strong>Donec quam felis</strong>
+
+                    <p>
+                        Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects
+                        and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath
+                    </p>
+
+                    <p>
+                        I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
+                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.
+                    </p>
+                </div>
+            </div>
+            <div class="tab-pane" id="tabs-3">
+                <div class="panel-body">
+                    <strong>Donec quam felis</strong>
+
+                    <p>
+                        Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects
+                        and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath
+                    </p>
+
+                    <p>
+                        I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
+                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    var addTabs = function (obj) {
+        id = "tab_" + obj.id;
+        obj.url = '@Url.Action("Menu", "System")';
+        console.log(obj);
+        $(".active").removeClass("active");
+
+        //如果TAB不存在，创建一个新的TAB
+        if (!$("#" + id)[0]) {
+            //固定TAB中IFRAME高度
+            mainHeight = $(document.body).height() - 95;
+            //创建新TAB的title
+            title = '<li role="presentation" id="tab_' + id + '"><a href="#' + id + '" aria-controls="' + id + '" role="tab" data-toggle="tab">' + obj.title;
+            //是否允许关闭
+            if (obj.close) {
+                title += ' <i class="fa fa-close" tabclose="' + id + '"></i>';
+            }
+            title += '</a></li>';
+            //是否指定TAB内容
+            if (obj.content) {
+                content = '<div role="tabpanel" class="tab-pane" id="' + id + '">' + obj.content + '</div>';
+            } else {//没有内容，使用IFRAME打开链接
+                content = '<div role="tabpanel" class="tab-pane" id="' + id + '"><iframe src="' + obj.url + '" width="100%" height="' + mainHeight +  '" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe></div>';
+            }
+            //加入TABS
+            $(".nav-tabs").append(title);
+            $(".tab-content").append(content);
+        }
+
+        //激活TAB
+        $("#tab_" + id).addClass('active');
+        $("#" + id).addClass("active");
+    };
+
+    var closeTab = function (id) {
+        //如果关闭的是当前激活的TAB，激活他的前一个TAB
+        if ($("li.active").attr('id') == "tab_" + id) {
+            $("#tab_" + id).prev().addClass('active');
+            $("#" + id).prev().addClass('active');
+        }
+        //关闭TAB
+        $("#tab_" + id).remove();
+        $("#" + id).remove();
+    };
+
+    $(function () {
+        $("#tabs1 a").click(function (e) {
+            $(this).tab('show');
+        });
+        mainHeight = $(document.body).height() - 45;
+        $('.main-left,.main-right').height(mainHeight);
+        $("[addtabs]").click(function () {
+            addTabs({ id: $(this).attr("id"), title: $(this).attr('title'), close: true });
+        });
+
+        $(".nav-tabs").on("click", "[tabclose]", function (e) {
+            id = $(this).attr("tabclose");
+            closeTab(id);
+        });
+    });
+</script>  

@@ -104,5 +104,15 @@ namespace MyProject.Controllers
         }
 
 
+        public ActionResult User()
+        {
+            return PartialView("User");
+        }
+
+        public ActionResult Account()
+        {
+            return View();
+        }
+
     }
 }

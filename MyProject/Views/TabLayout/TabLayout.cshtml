@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="~/Content/MyMain.css" />
 
     <!-- Add local styles, mostly for plugins css file -->
-    @if (IsSectionDefined("Styles"))
-    {@RenderSection("Styles", required: false)}
+    @*@if (IsSectionDefined("Styles"))
+        {@RenderSection("Styles", required: false)}*@
 
     <!-- Primary HOMER style -->
     @System.Web.Optimization.Styles.Render("~/bundles/homer/css")
@@ -46,7 +46,7 @@
 
 
     <!-- Handler for local scripts -->
-    @RenderSection("scripts", required: false)
+    @*@RenderSection("scripts", required: false)*@
 
 
     @*<style>
@@ -59,46 +59,25 @@
 </head>
 <body>
 
-    <!-- Simple splash screen-->
-    <div class="splash">
-        <div class="color-line">
-        </div>
-        <div class="splash-title">
-            <h1>MyProject for MSC project</h1>
-            @*<p>Special Admin Theme for small and medium webapp with very clean and aesthetic style and feel. </p>*@
-            <div class="spinner">
-                <div class="rect1"></div>
-                <div class="rect2"></div> <div class="rect3"></div>
-                <div class="rect4"></div> <div class="rect5"></div>
-            </div>
-        </div>
-    </div>
+   
 
-
-
-    <!--[if lt IE 7]>
-    <p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <!-- Header -->
     <div id="header">
         @Html.Partial("_Header")
     </div>
 
-    <!-- Navigation -->
     <aside id="menu">
         @Html.Partial("_Navigation")
     </aside>
-
-    <!-- Main view  -->
     <div id="wrapper">
         <div id="Selector"></div>
-        @RenderBody()
+
 
         <!-- Footer-->
         @Html.Partial("_Footer")
     </div>
-
     <script type="text/javascript">
+
+        var _curPageLink = '';
 
         $(function () {
 
@@ -111,19 +90,31 @@
             });
 
             tree.on('nodeSelected', function (event, data) {
-                @*@Html.ActionLink()*@
-                alert(11);
-                $.ajax({
-                    url: data.href,
-                    type: "Post",
-                   
-                    success: function (data) {
-                        $("#Selector").html(data);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("加载失败：" + errorThrown);
-                    }
-                });  
+                if (data.href == _curPageLink)
+                    return;
+                if (data.href == '#')
+                    return;
+                _curPageLink = data.href;
+
+               
+                $("#Selector").html(wattingDialog());
+
+                setTimeout(function () {
+                    $.ajax({
+                        url: data.href,
+                        type: "Post",
+                        success: function (data) {
+                            $("#Selector").html('');
+                            $("#Selector").html(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Loading failed：" + errorThrown);
+                            $("#Selector").html('');
+                        }
+                    });
+                }, 1);
+
+
             });
 
         })
@@ -133,6 +124,8 @@
             return json;
         }
 
+
+        //Demo data
         function getTree() {
             var data = [
                 {

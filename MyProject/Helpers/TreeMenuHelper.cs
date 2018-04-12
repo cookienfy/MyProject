@@ -31,7 +31,7 @@ namespace MyProject.Helpers
                 node.href = string.IsNullOrEmpty(f.FunLink) ? "#" : f.FunLink;
                 list.Add(node);
 
-                var sub = querys.Where(p => p.FunParentId == f.FunId);
+                var sub = querys.Where(p => p.FunParentId == f.FunId).OrderBy(r => r.FunSeq);
                 if (sub.Count() > 0)
                     RecursionGetNode(node, sub, querys);
             }
@@ -58,7 +58,7 @@ namespace MyProject.Helpers
                     parentNode.nodes = new List<TreeNode>();
                 parentNode.nodes.Add(node);
 
-                var sub = querys.Where(p => p.FunParentId == f.FunId);
+                var sub = querys.Where(p => p.FunParentId == f.FunId).OrderBy(r => r.FunSeq);
                 if (sub.Count() > 0)
                     RecursionGetNode(node, sub, querys);
             }

@@ -2731,6 +2731,7 @@
     <Compile Include="BLL\ProjectBLL.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TabLayoutController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3452,6 +3453,10 @@
     <Content Include="Views\Home\ProjectDetail.cshtml" />
     <Content Include="Views\System\Menu.cshtml" />
     <Content Include="Views\System\ModalMenu.cshtml" />
+    <Content Include="Views\System\User.cshtml" />
+    <Content Include="Views\Shared\_LayoutBlank.cshtml" />
+    <Content Include="Views\TabLayout\TabLayout.cshtml" />
+    <Content Include="Views\System\Account.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

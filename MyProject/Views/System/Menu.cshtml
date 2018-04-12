@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Menu";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -89,7 +89,7 @@
                 </thead>
 
             </table>
-            @Html.Partial("ModalMenu")
+
         </div>
 
     </div>
@@ -98,24 +98,24 @@
 
 </div>
 
+@Html.Partial("ModalMenu")
 
 
-@section Styles {
-    @System.Web.Optimization.Styles.Render("~/bundles/datatables/css")
-    @System.Web.Optimization.Styles.Render("~/bundles/select2/css")
-    @System.Web.Optimization.Styles.Render("~/bundles/ladda/css")
-    @System.Web.Optimization.Styles.Render("~/bundles/touchspin/css")
+@System.Web.Optimization.Styles.Render("~/bundles/datatables/css")
+@System.Web.Optimization.Styles.Render("~/bundles/select2/css")
+@System.Web.Optimization.Styles.Render("~/bundles/ladda/css")
+@System.Web.Optimization.Styles.Render("~/bundles/touchspin/css")
 
-}
 
-@section Scripts {
-    @System.Web.Optimization.Scripts.Render("~/bundles/datatables/js")
-    @System.Web.Optimization.Scripts.Render("~/bundles/datatablesBootstrap/js")
-    @System.Web.Optimization.Scripts.Render("~/bundles/datatablesPlugins/js")
-    @System.Web.Optimization.Scripts.Render("~/bundles/select2/js")
-    @System.Web.Optimization.Scripts.Render("~/bundles/ladda/js")
-    @System.Web.Optimization.Scripts.Render("~/bundles/touchspin/js")
-}
+
+
+@System.Web.Optimization.Scripts.Render("~/bundles/datatables/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesBootstrap/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesPlugins/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/select2/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/ladda/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/touchspin/js")
+
 
 
 <script type="text/javascript">
