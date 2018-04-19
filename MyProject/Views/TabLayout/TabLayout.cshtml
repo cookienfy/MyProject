@@ -51,15 +51,20 @@
 
     @*<style>
 
-            body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
-                font-size: 11px;
-                line-height: 1;
-            }
-        </style>*@
+        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .dataTableLayout {
+            table-layout: fixed;
+            width: 100%;
+        }
+    </style>*@
 </head>
 <body>
 
-   
+
 
     <div id="header">
         @Html.Partial("_Header")
@@ -96,7 +101,7 @@
                     return;
                 _curPageLink = data.href;
 
-               
+
                 $("#Selector").html(wattingDialog());
 
                 setTimeout(function () {

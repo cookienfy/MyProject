@@ -1,33 +1,172 @@
-﻿<div class="normalheader transition animated fadeInUp">
-    @*small-header*@
-    <div class="hpanel">
-        <div class="panel-body">
-            <a class="small-header-action" href="">
-                <div class="clip-header">
-                    <i class="fa fa-arrow-up"></i>
-                </div>
-            </a>
+﻿@*<div class="normalheader transition animated fadeInUp">
+        <div class="hpanel">
+            <div class="panel-body">
+                <a class="small-header-action" href="">
+                    <div class="clip-header">
+                        <i class="fa fa-arrow-up"></i>
+                    </div>
+                </a>
 
-            <div id="hbreadcrumb" class="pull-right">
-                <ol class="hbreadcrumb breadcrumb">
-                    <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
-                    <li>
-                        <span>App views</span>
-                    </li>
-                    <li class="active">
-                        <span>MyProjects</span>
-                    </li>
-                </ol>
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                        <li>
+                            <span>App views</span>
+                        </li>
+                        <li class="active">
+                            <span>MyProjects</span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    User
+                </h2>
+                <small>List of menus.</small>
             </div>
-            <h2 class="font-light m-b-xs">
-                User
-            </h2>
-            <small>List of menus.</small>
         </div>
-    </div>
-</div>
+    </div>*@
 
 <div class="content animated fadeInUp animate-panel">
 
+    <div class="hpanel hblue">
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <table id="tbAccount" class="table table-striped table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>
+                                UserId
+                            </th>
+                            <th>
+                                UserName
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                FirstName
+                            </th>
+                            <th>
+                                LastName
+                            </th>
+                            <th>
+                                FullName
+                            </th>
+                            <th>
+                                LastLogon
+                            </th>
+                            <th>
+                                LCV
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
 
 </div>
+
+
+@System.Web.Optimization.Styles.Render("~/bundles/datatables/css")
+@System.Web.Optimization.Styles.Render("~/bundles/select2/css")
+@System.Web.Optimization.Styles.Render("~/bundles/ladda/css")
+@System.Web.Optimization.Styles.Render("~/bundles/touchspin/css")
+
+
+
+
+@System.Web.Optimization.Scripts.Render("~/bundles/datatables/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesBootstrap/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesPlugins/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/select2/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/ladda/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/touchspin/js")
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var table = $('#tbAccount').DataTable({
+            "scrollX": false,
+            "serverSide": false,
+            "processing": true,
+            //"autoWidth": false,
+            "pageLength": 10,//首次加载的数据条数
+            "ajax": {
+                "url": '@Url.Action("GetUsers", "System")',
+                "type": 'POST',
+                "data": function (d) {
+                    //d.AssessmentId = _data.AssessmentId;
+                    //d.UserId = _data.UserId;
+                    //d.areaId = _data.AreaId;
+                }
+            },
+            "columns": [
+                //{
+                //    "className": 'details-control',
+                //    "orderable": false,
+                //    "data": null,
+                //    "defaultContent": ''
+                //},
+                { "data": "Action" },
+                { "data": "UserId" },
+                { "data": "UserName" },
+                { "data": "Email" },
+                { "data": "FirstName" },
+                { "data": "LastName" },
+                { "data": "FullName" },
+                { "data": "LastLogon"},
+                { "data": "LCV" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0,//编辑
+                    "width": "30px",
+                    "data": null,
+                    //  "defaultContent": "<div class='btn-group'>" +
+                    //"<button data-toggle='dropdown' class='btn btn-sm btn-primary dropdown-toggle'>Click Me <span class='caret'></span></button>" +
+                    //"<ul class='dropdown-menu'>" +
+                    //    "<li><a href='#' id='btnASTA'>ASTA</a></li>" +
+                    //    "<li><a href='#' id='btnFeedback'>Feeback</a></li>" +
+                    //    "<li><a href='#'>Something else here</a></li>" +
+                    //    "<li class='divider'></li>" +
+                    //    "<li><a href='#'>Separated link</a></li>" +
+                    //"</ul>" +
+                    // "</div>"
+                    "defaultContent": "<button id='btnNew' class='btn btn-xs btn-primary' title='New' type='button'><i class='fa fa-plus'></i></button> " +
+                    "<button id='btnEdit' class='btn btn-xs btn-primary' type='button' data-toggle='tooltip' data-placement='bottom' title='Edit'><i class='fa fa-pencil'></i></button>"
+                }
+            ],
+            "order": [[1, 'asc']],
+            "pagingType": "full_numbers"
+
+
+        });
+
+
+        $('#btnSearch').on('click', function () {
+            alert($('#inputUserName').val());
+        });
+
+        table.on('click', 'button#btnNew', function () {
+            alert('btnNew');
+        });
+
+
+    })
+
+
+
+</script>

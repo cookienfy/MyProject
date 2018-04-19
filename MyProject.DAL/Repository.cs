@@ -94,4 +94,23 @@ namespace MyProject.DAL
 
         }
     }
+
+    public class UserRepository : Repository<uUser>
+    {
+        public UserRepository(DbContext db) : base(db)
+        {
+
+        }
+
+        public override IEnumerable<uUser> Query(Expression<Func<uUser, bool>> expWhere, Expression<Func<uUser, IOrderedQueryable>> expOrder = null)
+        {
+            if (expWhere != null)
+                return base.Query(expWhere, expOrder);
+            else
+                return this.DbSet.ToList();
+        }
+
+    }
+
+
 }

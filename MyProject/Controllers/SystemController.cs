@@ -114,5 +114,16 @@ namespace MyProject.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GetUsers()
+        {
+            using (UnitOfWork work = new UnitOfWork())
+            {
+                var users = work.UserRepository.Query(null, null);
+                return Json(new { status = 0, data = users });
+            }
+        }
+
+
     }
 }

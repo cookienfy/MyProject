@@ -5,34 +5,36 @@
 }
 
 
-<div class="normalheader transition animated fadeInUp">
-    @*small-header*@
-    <div class="hpanel">
-        <div class="panel-body">
-            <a class="small-header-action" href="">
-                <div class="clip-header">
-                    <i class="fa fa-arrow-up"></i>
-                </div>
-            </a>
+@*<div class="normalheader transition animated fadeInUp">
+        small-header
+        <div class="hpanel">
+            <div class="panel-body">
+                <a class="small-header-action" href="">
+                    <div class="clip-header">
+                        <i class="fa fa-arrow-up"></i>
+                    </div>
+                </a>
 
-            <div id="hbreadcrumb" class="pull-right">
-                <ol class="hbreadcrumb breadcrumb">
-                    <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
-                    <li>
-                        <span>App views</span>
-                    </li>
-                    <li class="active">
-                        <span>MyProjects</span>
-                    </li>
-                </ol>
+                <div id="hbreadcrumb" class="pull-right">
+                    <ol class="hbreadcrumb breadcrumb">
+                        <li><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+                        <li>
+                            <span>App views</span>
+                        </li>
+                        <li class="active">
+                            <span>MyProjects</span>
+                        </li>
+                    </ol>
+                </div>
+                <h2 class="font-light m-b-xs">
+                    Menu
+                </h2>
+                <small>List of menus.</small>
             </div>
-            <h2 class="font-light m-b-xs">
-                Menu
-            </h2>
-            <small>List of menus.</small>
         </div>
-    </div>
-</div>
+    </div>*@
+
+
 
 <div class="content animated fadeInUp animate-panel">
 
@@ -47,7 +49,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <table id="tbMenu" class="table table-striped table-bordered" width="100%">
+            <table id="tbMenu" class="table table-striped table-bordered" style="width:100%;">
                 <thead>
                     <tr>
                         <th>Action</th>
@@ -305,7 +307,11 @@
             //});
 
             $("#myModalMenu").modal("show");
-         });
+            });
+
+        $('myModalMenu').on('shown.bs.modal', function () {
+            table.columns.adjust();
+        })
 
         table.on('click', 'button#btnEdit', function () {
             var data = table.row($(this).parents('tr')).data();

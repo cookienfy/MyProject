@@ -3457,6 +3457,7 @@
     <Content Include="Views\Shared\_LayoutBlank.cshtml" />
     <Content Include="Views\TabLayout\TabLayout.cshtml" />
     <Content Include="Views\System\Account.cshtml" />
+    <Content Include="Views\System\ModalAccount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

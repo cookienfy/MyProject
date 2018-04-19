@@ -263,5 +263,12 @@ namespace MyProject.Tests
 
         }
 
+        [TestMethod]
+        public void GetUserList()
+        {
+            UnitOfWork unitOfWork = new UnitOfWork();
+            var aa = unitOfWork.UserRepository.Query(null, null);
+        }
+
     }
 }

@@ -1,19 +1,20 @@
-﻿<div class="modal fade" id="myModalMenu" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+﻿<div class="modal fade" id="myModalAccount" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="color-line"></div>
-            @*<div class="modal-header">
+            <div class="modal-header">
                 <h2 class="modal-title">Meun</h2>
-                <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-            </div>*@
+            </div>
             <div class="modal-body">
-                <div id="dvMenu" class="form-horizontal">
+                <div id="dvAccount" class="form-horizontal">
                     <div class="form-group">
-                        <label for="inputSeq" class="col-sm-3 control-label">Fun Seq:</label>
+                        <label for="inputUserName" class="col-sm-3 control-label">User Name:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputSeq" placeholder="Please input your function sequence" v-bind:value="menu.FunSeq" v-model="menu.FunSeq">
+                            <input type="text" class="form-control" id="inputUserName" placeholder="Please input your user name" v-bind:value="menu.FunSeq" v-model="user.UserName">
                         </div>
                     </div>
+
+
                     <div class="form-group">
                         <label for="inputFunName" class="col-sm-3 control-label">Fun Name:</label>
                         <div class="col-sm-9">

@@ -13,12 +13,14 @@ namespace MyProject.DAL
 
         private CodeRepository _codeRepository;
         private FunctionRepository _functionRepository;
+        private UserRepository _userRepository;
 
         public UnitOfWork()
         {
             _db = new EF.MyProjectEF();
             _codeRepository = new CodeRepository(_db);
             _functionRepository = new FunctionRepository(_db);
+            _userRepository = new UserRepository(_db);
         }
 
         public CodeRepository CodeRepository
@@ -31,6 +33,12 @@ namespace MyProject.DAL
         {
             get => _functionRepository;
             set => _functionRepository = value;
+        }
+
+        public UserRepository UserRepository
+        {
+            get => _userRepository;
+            set => _userRepository = value;
         }
 
         public void Dispose()
