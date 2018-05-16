@@ -76,5 +76,13 @@ namespace MyProject.Controllers
 
         }
 
+
+        public ActionResult InfoCenter()
+        {
+            return View();
+        }
+
+
+
     }
 }

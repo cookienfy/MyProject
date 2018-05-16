@@ -3458,6 +3458,7 @@
     <Content Include="Views\TabLayout\TabLayout.cshtml" />
     <Content Include="Views\System\Account.cshtml" />
     <Content Include="Views\System\ModalAccount.cshtml" />
+    <Content Include="Views\Home\InfoCenter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
