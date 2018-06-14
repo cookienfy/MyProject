@@ -13,7 +13,8 @@ namespace MyProject.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            //test
+            //this is a test.
+
             return View();
         }
 
