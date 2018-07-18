@@ -33,5 +33,7 @@ namespace MyProject.DAL.EF
 
         [StringLength(20)]
         public string FunPic { get; set; }
+
+        public bool FunLinkIsOpen { get; set; }
     }
 }

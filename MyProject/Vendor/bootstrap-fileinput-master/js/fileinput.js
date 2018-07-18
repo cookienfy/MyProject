@@ -2329,7 +2329,11 @@
                     data: $.extend(true, {}, {key: vKey}, extraData),
                     beforeSend: function (jqXHR) {
                         self.ajaxAborted = false;
-                        self._raise('filepredelete', [vKey, jqXHR, extraData]);
+                        //Edit by Edwin
+                        var r = self._raise('filepredelete', [vKey, jqXHR, extraData]);
+                        //if (!r)
+                        //    return false;
+                        //End Edit by Edwin
                         if (self.ajaxAborted) {
                             jqXHR.abort();
                         } else {
@@ -2381,7 +2385,12 @@
                     if (!self._validateMinCount()) {
                         return false;
                     }
-                    $.ajax(settings);
+                    //Edit by Edwin
+                    if (confirm("Do you want to delete?"))
+                    {
+                        $.ajax(settings);
+                    }
+                    //Edit by Edwin
                 });
             });
         },

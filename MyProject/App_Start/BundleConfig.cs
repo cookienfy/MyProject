@@ -39,11 +39,11 @@ namespace MyProject.App_Start
 
             // Bootstrap style
             bundles.Add(new StyleBundle("~/bundles/bootstrap/css").Include(
-                      "~/Vendor/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform()));
+                      "~/Vendor/bootstrap/dist/css/bootstrap.css", new CssRewriteUrlTransform()));
 
             // Bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap/js").Include(
-                      "~/Vendor/bootstrap/dist/js/bootstrap.min.js"));
+                      "~/Vendor/bootstrap/dist/js/bootstrap.js"));
 
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
@@ -266,7 +266,10 @@ namespace MyProject.App_Start
                       "~/Vendor/bootstrap-fileinput-master/css/fileinput.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/fileinput/js").Include(
-                     "~/Vendor/bootstrap-fileinput-master/js/fileinput.min.js"));
+                     "~/Vendor/bootstrap-fileinput-master/js/fileinput.js",
+                     "~/Vendor/bootstrap-fileinput-master/js/plugins/piexif.min.js",
+                     "~/Vendor/bootstrap-fileinput-master/js/plugins/purify.min.js",
+                     "~/Vendor/bootstrap-fileinput-master/js/plugins/sortable.min.js"));
 
 
             //jqGrid

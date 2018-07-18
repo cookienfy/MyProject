@@ -28,6 +28,7 @@ namespace MyProject.Helpers
                 node.id = f.FunId;
                 node.text = f.FunName;
                 node.icon = f.FunPic;
+                node.isOpen = f.FunLinkIsOpen;
                 node.href = string.IsNullOrEmpty(f.FunLink) ? "#" : f.FunLink;
                 list.Add(node);
 
@@ -51,7 +52,7 @@ namespace MyProject.Helpers
                 node.id = f.FunId;
                 node.text = f.FunName;
                 node.icon = f.FunPic;
-
+                node.isOpen = f.FunLinkIsOpen;
                 node.href = string.IsNullOrEmpty(f.FunLink) ? "#" : f.FunLink;
                 node.state = new state() { expanded = true };
                 if (parentNode.nodes == null)
@@ -81,6 +82,8 @@ namespace MyProject.Helpers
         //public string color { get; set; }
 
         public string href { get; set; }
+
+        public bool isOpen { get; set; }
         //public bool selectable { get; set; }
 
         //public int parentid { get; set; }

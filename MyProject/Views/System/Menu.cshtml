@@ -49,49 +49,53 @@
             </div>
         </div>
         <div class="panel-body">
-            <table id="tbMenu" class="table table-striped table-bordered" style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>
-                            FunId
-                        </th>
-                        <th>
-                            FunName
-                        </th>
-                        <th>
-                            FunPic
-                        </th>
-                        <th>
-                            FunLink
-                        </th>
-                        <th>
-                            FunDesc
-                        </th>
-                        <th>
-                            FunParentId
-                        </th>
-                        <th>
-                            FunParent
-                        </th>
-                        <th>
-                            FunTypeId
-                        </th>
-                        <th>
-                            FunType
-                        </th>
-                        <th>
-                            FunSeq
-                        </th>
-                        <th>
-                            LCV
-                        </th>
-                    </tr>
+            <div class="container-fluid">
+                <table id="tbMenu" class="table table-striped table-bordered" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>
+                                FunId
+                            </th>
+                            <th>
+                                FunName
+                            </th>
+                            <th>
+                                FunPic
+                            </th>
+                            <th>
+                                FunLink
+                            </th>
+                            <th>
+                                FunLinkIsOpen
+                            </th>
+                            <th>
+                                FunDesc
+                            </th>
+                            <th>
+                                FunParentId
+                            </th>
+                            <th>
+                                FunParent
+                            </th>
+                            <th>
+                                FunTypeId
+                            </th>
+                            <th>
+                                FunType
+                            </th>
+                            <th>
+                                FunSeq
+                            </th>
+                            <th>
+                                LCV
+                            </th>
+                        </tr>
 
-                </thead>
+                    </thead>
 
-            </table>
-
+                </table>
+            </div>
         </div>
 
     </div>
@@ -129,11 +133,13 @@
         data: {
             codes: [],
             functions:[],
-            lcvs:[],
+            lcvs: [],
+            isOpens:[],
             menu: {
                 FunId: null,
                 FunName: '',
                 FunLink: '',
+                FunLinkIsOpen: false,
                 FunDesc: '',
                 FunParentId: null,
                 FunTypeId: null,
@@ -160,7 +166,9 @@
                 app.lcvs = [];
                 app.lcvs.push({ 'text': 'False', 'value': false });
                 app.lcvs.push({ 'text': 'True', 'value': true });
-
+                app.isOpens = [];
+                app.isOpens.push({ 'text': 'Yes', 'value': true });
+                app.isOpens.push({ 'text': 'No', 'value': false });
 
                   $.post(
                     '@Url.Action("GetParentMenus", "System")',
@@ -230,6 +238,7 @@
                 { "data": "FunName" },
                 { "data": "FunPic" },
                 { "data": "FunLink" },
+                { "data": "FunLinkIsOpen" },
                 { "data": "FunDesc" },
                 { "data": "FunParentId" },
                 { "data": "FunParent"},
@@ -282,6 +291,7 @@
                 app.menu.FunLink = '';
                 app.menu.FunDesc = '';
                 app.menu.FunPic = '';
+                app.menu.FunLinkIsOpen = false;
                 app.menu.FunParentId = null;
                 app.menu.FunTypeId = null;
                 app.menu.FunSeq = null;

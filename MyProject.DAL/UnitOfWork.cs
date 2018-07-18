@@ -12,8 +12,11 @@ namespace MyProject.DAL
         private DbContext _db;
 
         private CodeRepository _codeRepository;
+        private LibraryRepository _libraryRepository;
         private FunctionRepository _functionRepository;
         private UserRepository _userRepository;
+        private ContextRepository _contextRepository;
+
 
         public UnitOfWork()
         {
@@ -21,7 +24,11 @@ namespace MyProject.DAL
             _codeRepository = new CodeRepository(_db);
             _functionRepository = new FunctionRepository(_db);
             _userRepository = new UserRepository(_db);
+            _libraryRepository = new LibraryRepository(_db);
+            _contextRepository = new ContextRepository(_db);
         }
+
+        public DbContext DB { get; set; }
 
         public CodeRepository CodeRepository
         {
@@ -39,6 +46,18 @@ namespace MyProject.DAL
         {
             get => _userRepository;
             set => _userRepository = value;
+        }
+
+        public LibraryRepository LibraryRepository
+        {
+            get => _libraryRepository;
+            set => _libraryRepository = value;
+        }
+
+        public ContextRepository ContextRepository
+        {
+            get => _contextRepository;
+            set => _contextRepository = value;
         }
 
         public void Dispose()

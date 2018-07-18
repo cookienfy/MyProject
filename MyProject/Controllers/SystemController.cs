@@ -41,6 +41,7 @@ namespace MyProject.Controllers
                     f.FunId,
                     f.FunName,
                     f.FunLink,
+                    f.FunLinkIsOpen,
                     f.FunDesc,
                     f.FunPic,
                     f.FunParentId,

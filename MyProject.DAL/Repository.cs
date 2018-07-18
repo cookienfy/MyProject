@@ -95,6 +95,22 @@ namespace MyProject.DAL
         }
     }
 
+    public class LibraryRepository : Repository<uLibrary>
+    {
+        public LibraryRepository(DbContext db) : base(db)
+        {
+
+        }
+    }
+
+    public class ContextRepository : Repository<uContext>
+    {
+        public ContextRepository(DbContext db) : base(db)
+        {
+
+        }
+    }
+
     public class UserRepository : Repository<uUser>
     {
         public UserRepository(DbContext db) : base(db)

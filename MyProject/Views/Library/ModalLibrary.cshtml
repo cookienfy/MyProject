@@ -1,0 +1,153 @@
+﻿
+<div class="modal fade" id="myModalMenu" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" style="overflow: auto;">
+    <div class="modal-dialog" role="document" style="width:1050px;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="fa fa-edit"></span> New
+                </h2>
+                @*<small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>*@
+            </div>
+            <div class="modal-body">
+
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1">基本信息</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2">图片 <span id="spNumber"> </span></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            @using (Html.BeginForm("AddLibrary", "Library", FormMethod.Post, new { id = "frmLibrary" }))
+                            {
+                                <div class="container">
+
+                                    <div class="row">
+                                        <!--前缀-->
+
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">问题</span>
+                                            <input id="idoubt" class="form-control" type="text" name="doubt">
+
+                                        </div>
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">功能</span>
+                                            <input id="ifun" class="form-control" type="text" name="fun">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">难度级别</span>
+                                            <select id="selDiff" class="form-control">
+                                                <option value="1" selected="selected">简单</option>
+                                                <option value="2">一般</option>
+                                                <option value="3">比较难</option>
+                                                <option value="4">非常难</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">贡献者</span>
+                                            <input id="icontributor" class="form-control" type="text" name="contributor">
+                                        </div>
+
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">贡献日期</span>
+                                            <div class='controls input-append input-group date' id="cDate">
+                                                <input type="text" class="form-control" name="conDate" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!--前缀-->
+                                        <div class="form-group col-sm-5">
+
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">问题描述</span>
+                                            <textarea id="idoubtDesc" class="form-control" style="height:150px;" name="doubtDesc"></textarea>
+
+                                        </div>
+                                        <div class="form-group col-sm-5">
+                                            <span style="font-size:14px;color:#34495e;font-weight:600;">解决办法</span>
+                                            <textarea id="isolveWay" class="form-control" style="height:150px;" name="solveWay"></textarea>
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-group col-sm-10">
+                                        <input id="fileinput" type="file" multiple />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*<table id="tbDetail" class="table table-striped table-bordered" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>功能</th>
+                                <th>
+                                    编号
+                                </th>
+                                <th>
+                                    类型
+                                </th>
+                                <th>
+                                    问题
+                                </th>
+                                <th>
+                                    描述
+                                </th>
+                                <th>
+                                    解决办法
+                                </th>
+                                <th>
+                                    难易度级别
+                                </th>
+                                <th>
+                                    贡献者
+                                </th>
+                                <th>
+                                    贡献日期
+                                </th>
+                                <th>
+                                    最后修改者
+                                </th>
+                                <th>
+                                    最后修改日期
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>*@
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                <button id="btnSave" type="button" class="btn btn-sm btn-primary">Save changes</button>
+                @*<button id="btnUpload" type="button" class="btn btn-sm btn-primary">Upload</button>*@
+            </div>
+        </div>
+    </div>
+</div>

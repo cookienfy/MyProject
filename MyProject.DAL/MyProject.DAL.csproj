@@ -64,7 +64,9 @@
     <Compile Include="EF\MyProjectEF.cs" />
     <Compile Include="EF\uCode.cs" />
     <Compile Include="EF\uCodeGroup.cs" />
+    <Compile Include="EF\uContext.cs" />
     <Compile Include="EF\uFunction.cs" />
+    <Compile Include="EF\uLibrary.cs" />
     <Compile Include="EF\uProject.cs" />
     <Compile Include="EF\uTracking.cs" />
     <Compile Include="EF\uUser.cs" />

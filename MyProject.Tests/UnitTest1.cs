@@ -109,8 +109,15 @@ namespace MyProject.Tests
         public void AddNewTest()
         {
 
+            
+
 
             MyProjectEF mp = new MyProjectEF();
+
+
+
+            mp.uLibrary.ToList();
+
             mp.uUsers.Add(new uUser()
             {
                 UserName = "cookienfy",
@@ -132,6 +139,7 @@ namespace MyProject.Tests
         public void CreateNewFunctions()
         {
             MyProjectEF ef = new MyProjectEF();
+
             uFunction fun = new uFunction();
             fun.FunName = "Dashboard";
             fun.FunTypeId = 1;
@@ -174,7 +182,14 @@ namespace MyProject.Tests
         [TestMethod]
         public void RepositoryTest()
         {
+
+
+
             UnitOfWork work = new UnitOfWork();
+
+            var aa = work.LibraryRepository.DbSet.ToList();
+
+
             var queryable = work.FunctionRepository.DbSet.Join(work.CodeRepository.DbSet, f => f.FunTypeId, c => c.CodeId, (f, c) => new
             {
                 f.FunId,
@@ -211,6 +226,22 @@ namespace MyProject.Tests
         [TestMethod]
         public void Respository()
         {
+            UnitOfWork work = new UnitOfWork();
+            work.LibraryRepository.Add(new uLibrary()
+            {
+                Doubt = "Test01",
+                DoubtDesc = "Test01 Desc",
+                ProcessDoubtWay = "Test01 Way",
+                Contributor = "Edwin",
+                ContributeDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now,
+                DifficultyTypeId = 1,
+                Fun = "3PF->Add",
+                FunTypeId = 1,
+                LCV = false
+            });
+
+            work.SaveChanges();
             //using (MyProject.DAL.EF.MyProjectEF db = new DAL.EF.MyProjectEF())
             //{
             //    var ccc = db.uCodes.Where(p => p.CodeId == 1);

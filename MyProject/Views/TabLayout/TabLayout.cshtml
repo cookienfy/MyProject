@@ -9,17 +9,19 @@
 
     @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
 
-
+    @*<link href='http://fonts.font.im/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>*@
     <!--Customize global font size* -->
     @*@System.Web.Optimization.Styles.Render("~/bundles/MyMain/css")*@
 
     <!-- Primary vendor style -->
     @System.Web.Optimization.Styles.Render("~/bundles/font-awesome/css")
     @System.Web.Optimization.Styles.Render("~/bundles/animate/css")
-    @System.Web.Optimization.Styles.Render("~/bundles/bootstrap/css")
+    <link rel="stylesheet" href="~/Vendor/bootstrap/dist/css/bootstrap.css" />
+    @*@System.Web.Optimization.Styles.Render("~/bundles/bootstrap/css")*@
     @System.Web.Optimization.Styles.Render("~/bundles/peicon7stroke/css")
     @System.Web.Optimization.Styles.Render("~/bundles/newdatetimepicker/css")
     @System.Web.Optimization.Styles.Render("~/bundles/treeview/css")
+
 
     <link rel="stylesheet" href="~/Content/MyMain.css" />
 
@@ -51,16 +53,16 @@
 
     @*<style>
 
-        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
-            font-size: 12px;
-            line-height: 1;
-        }
+            body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+                font-size: 12px;
+                line-height: 1;
+            }
 
-        .dataTableLayout {
-            table-layout: fixed;
-            width: 100%;
-        }
-    </style>*@
+            .dataTableLayout {
+                table-layout: fixed;
+                width: 100%;
+            }
+        </style>*@
 </head>
 <body>
 
@@ -95,12 +97,22 @@
             });
 
             tree.on('nodeSelected', function (event, data) {
-                if (data.href == _curPageLink)
-                    return;
+                if (data.href == _curPageLink) {
+                    if (data.isOpen) {
+                        window.open(data.href, '_blank');
+                        return;
+                    } else 
+                        return;
+                }
+
                 if (data.href == '#')
                     return;
                 _curPageLink = data.href;
 
+                if (data.isOpen) {
+                    window.open(data.href, '_blank');
+                    return;
+                }
 
                 $("#Selector").html(wattingDialog());
 

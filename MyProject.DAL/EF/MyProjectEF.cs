@@ -20,8 +20,13 @@ namespace MyProject.DAL.EF
         public virtual DbSet<uUser> uUsers { get; set; }
         public virtual DbSet<uUserGroup> uUserGroups { get; set; }
 
+        public virtual DbSet<uContext> uContexts { get; set; }
+
+        public virtual DbSet<uLibrary> uLibrary { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<uCode>()
                 .Property(e => e.Code)
                 .IsUnicode(false);

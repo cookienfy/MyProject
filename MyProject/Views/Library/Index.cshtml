@@ -1,0 +1,606 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    int iMaxRows = ViewBag.MaxRows;
+}
+
+
+
+<div class="content animated fadeInUp animate-panel">
+
+
+    @*<div class="hpanel hblue">
+            <div class="panel-heading hbuilt">
+                Search
+
+            </div>
+            <div class="panel-body">
+                <div class="row-fluid" style="width:86%;">
+                    <div class="col-md-4">
+                        <div class="control-group form-inline">
+                            <label class="control-label">开始日期:</label>
+                            <div class='controls input-append input-group date' id="cData">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="control-group form-inline">
+                            <label class="control-label">结束日期:</label>
+                            <div class='input-group date' id="dData">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <input type="button" class="btn btn-sm btn-primary" value="Search" style="width:80px;" />
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>*@
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-body">
+                    <span style="color:#34495e;font-weight:600;">寻找答案解决您的问题或者添加常见问题帮助其他求助者.    (查询页面最多显示 @iMaxRows 条记录 )</span>
+                    <div class="m-t-sm">
+                        <div class="input-group">
+                            <input id="txtSearch" class="form-control" type="text" placeholder="Search question..">
+                            <div class="input-group-btn">
+                                <button id="btnSearch" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="hpanel hred">
+
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="pull-left" style="margin-bottom:10px;">
+                    <input type="button" id="btnNew" class="btn btn-sm btn-primary" value="New" style="width:80px;" />
+                    @*<input type="button" id="btnEdit" class="btn btn-sm btn-primary" value="Edit" style="width:80px;" />
+                        <input type="button" id="btnRemove" class="btn btn-sm btn-primary" value="Remove" style="width:80px;" />*@
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+
+
+                <table id="tbLibrary" class="table table-striped table-bordered" style="margin-top:30px; width:100%;">
+                    <thead>
+                        <tr>
+                            <th>操作</th>
+                            <th>
+                                LibraryId
+                            </th>
+                            <th>
+                                疑问
+                            </th>
+                            <th>
+                                功能
+                            </th>
+                            <th>
+                                贡献者
+                            </th>
+                            <th>
+                                贡献日期
+                            </th>
+
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("ModalLibrary")
+
+@System.Web.Optimization.Styles.Render("~/bundles/datatables/css")
+@System.Web.Optimization.Styles.Render("~/bundles/select2/css")
+@System.Web.Optimization.Styles.Render("~/bundles/ladda/css")
+@System.Web.Optimization.Styles.Render("~/bundles/touchspin/css")
+@System.Web.Optimization.Styles.Render("~/bundles/datetimepicker/css")
+@System.Web.Optimization.Styles.Render("~/bundles/fileinput/css")
+
+
+@System.Web.Optimization.Scripts.Render("~/bundles/datetimepicker/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatables/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesBootstrap/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/datatablesPlugins/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/select2/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/ladda/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/touchspin/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/fileinput/js")
+@System.Web.Optimization.Scripts.Render("~/bundles/validation/js")
+
+
+<script type="text/javascript">
+
+
+    var table = null;
+    var curModel = null;
+
+
+    $(document).ready(function () {
+        var option = {
+            //format: 'YYYY-MM-DD HH:mm:ss',
+            format: 'YYYY-MM-DD',
+            minDate: '1999-01-01',
+            maxDate: '2100-02-01',
+            sideBySide: false,
+            showClear: true
+        };
+
+        var cdate = $('#cDate');
+        cdate.datetimepicker(option);
+
+        //var ddate = $('#dData');
+        //ddate.datetimepicker(option);
+
+
+        $("#input-image-3").fileinput({
+            uploadUrl: "/site/image-upload",
+            allowedFileExtensions: ["jpg", "png", "gif"],
+            maxImageWidth: 200,
+            maxImageHeight: 150,
+            resizePreference: 'height',
+            maxFileCount: 1,
+            resizeImage: true
+        }).on('filepreupload', function () {
+            $('#kv-success-box').html('');
+        }).on('fileuploaded', function (event, data) {
+            $('#kv-success-box').append(data.response.link);
+            $('#kv-success-modal').modal('show');
+        });
+
+
+        IniDatatables();
+        FormValidation();
+        InitFileInput(null,null);
+        $('#btnSearch').on('click', function () {
+
+            var txtSearch = $('#txtSearch').val();
+            if (txtSearch == "") {
+                alert('请输入查询条件!');
+                return;
+            }
+            if (table != null) {
+                $('#tbLibrary').dataTable().fnClearTable();
+                table.ajax.params({'Doubt':$('#txtSearch').val()});
+                table.ajax.url('@Url.Action("GetLibraries", "Library")').load();
+                //table.fnDestroy();
+            }
+
+        });
+
+        $('#txtSearch').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                $("#btnSearch").click();
+            }
+        })
+
+        $('#myModalMenu').on('show.bs.modal', function () {
+            $('#myTab a:first').tab('show')
+        })
+
+        $('#btnNew').on('click', function () {
+            EmptyAllValues();
+            InitFileInput(null, null);
+            curModel = null;
+            $('.modal-title').html('<span class="fa fa-edit"></span> New');
+            $('#spNumber').removeClass('label label-primary');
+            $('#spNumber').html('');
+            $("#myModalMenu").modal("show");
+        });
+
+        $('#btnSave').on('click', function () {
+            var isPass = $("#frmLibrary").valid();
+            if (isPass) {
+                var model = {
+                    Fun: $('#ifun').val(),
+                    Doubt: $('#idoubt').val(),
+                    DoubtDesc: $('#idoubtDesc').val(),
+                    ProcessDoubtWay: $('#isolveWay').val(),
+                    DifficultyTypeId: $('#selDiff').val(),
+                    Contributor: $('#icontributor').val(),
+                    ContributeDate: $('#cDate').data("DateTimePicker").date().format('YYYY-MM-DD')
+                };
+                if (curModel != null)
+                    model.LibraryId = curModel.LibraryId;
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddLibrary", "Library")',
+                    data: { library: model },
+                    success: function (d) {
+                        curModel = d.value;
+                        $("#fileinput").fileinput("upload");
+                        //$.extend(app.menu, d);
+                        //alert('Save successful.');
+                        //$("#myModalMenu").modal("hide");
+
+                        //EmptyAllValues();
+                        //if (model.LibraryId != undefined && model.LibraryId != null)
+                        //    $('#tbLibrary').DataTable().ajax.reload();
+                    }
+                });
+            }
+        });
+    })
+
+
+
+    function EmptyAllValues() {
+        $('#ifun').val('');
+        $('#idoubt').val('');
+        $('#idoubtDesc').val('');
+        $('#isolveWay').val('');
+        $('#selDiff').val(0);
+        $('#icontributor').val('');
+        $('#cDate').data("DateTimePicker").date(moment().format('YYYY-MM-DD'));
+    }
+
+    function FormValidation() {
+
+        $("#frmLibrary").validate({
+            rules: {
+                doubt: {
+                    required: true,
+                    minlength: 1,
+                    maxlength:50
+                },
+                fun: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 50
+                },
+                contributor: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 50
+                },
+                conDate:{
+                    required: true
+                },
+                doubtDesc: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 500
+                },
+                solveWay: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 500
+                }
+            },
+            submitHandler: function (form) {
+                var a = 11;
+            }
+        })
+
+    }
+
+    function IniDatatables() {
+
+         table = $('#tbLibrary').DataTable({
+            "scrollX": false,
+            "serverSide": false,
+            "processing": true,
+            //"autoWidth": false,
+            "pageLength": 10,//首次加载的数据条数
+            //"destroy": true,
+            "ajax": {
+                "url": '@Url.Action("GetLibraries", "Library")',
+                "type": 'POST',
+                "data": function (d) {
+                    d.Doubt = $('#txtSearch').val();
+                    //d.AssessmentId = _data.AssessmentId;
+                    //d.UserId = _data.UserId;
+                    //d.areaId = _data.AreaId;
+                }
+            },
+            "columns": [
+                //{
+                //    "className": 'details-control',
+                //    "orderable": false,
+                //    "data": null,
+                //    "defaultContent": ''
+                //},
+                { "data": "Action","title":"操作"},
+                { "data": "LibraryId" },
+                { "data": "Doubt", "title": "疑问" },
+                { "data": "Fun", "title": "功能" },
+                { "data": "Contributor", "title": "贡献者" },
+                {
+                    "data": "ContributeDate", "title": "贡献日期"
+                }
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0,//编辑
+                    "width": "40px",
+                    "data": null,
+                    //  "defaultContent": "<div class='btn-group'>" +
+                    //"<button data-toggle='dropdown' class='btn btn-sm btn-primary dropdown-toggle'>Click Me <span class='caret'></span></button>" +
+                    //"<ul class='dropdown-menu'>" +
+                    //    "<li><a href='#' id='btnASTA'>ASTA</a></li>" +
+                    //    "<li><a href='#' id='btnFeedback'>Feeback</a></li>" +
+                    //    "<li><a href='#'>Something else here</a></li>" +
+                    //    "<li class='divider'></li>" +
+                    //    "<li><a href='#'>Separated link</a></li>" +
+                    //"</ul>" +
+                    // "</div>"
+                    "defaultContent": "<button id='btnGridEdit' class='btn btn-xs btn-default' title='Edit' type='button'><i class='fa fa-pencil'></i></button> " +
+                    "<button id='btnGridRemove' class='btn btn-xs btn-default' type='button' data-toggle='tooltip' data-placement='bottom' title='Remove'><i class='fa fa-trash'></i></button>"
+                },
+                {
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": true
+                },
+                {
+                    "targets": [2],
+                    "visible": true,
+                    "searchable": true,
+                    'orderable': false
+                },
+                {
+                    "targets": [3],
+                    "visible": true,
+                    "searchable": true,
+                    'orderable': false
+                },
+                {
+                    "targets": [5],
+                    "render": function (data, type, row) {
+                        var aa = 1;
+                        var m = moment(data).format("YYYY-MM-DD");
+                        return m;
+                    },
+                }
+             ],
+            "order": [[5, 'desc']],
+             "pagingType": "full_numbers",
+             "fnStateLoadCallback": function (settings) {
+                 var a = 1;
+             }
+             //"fnDrawCallback": function (obj) {
+             //    // var a = 11;
+             //    //var json = jQuery.parseJSON(obj.jqXHR.responseText);
+             //    if (obj.json != undefined) {
+             //        if (obj.json.value == 8)
+             //            alert(obj.json.msg);
+             //    }
+
+             //}
+
+
+
+        });
+
+        table.on('click', 'button#btnGridEdit', function () {
+            var data = table.row($(this).parents('tr')).data();
+             $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetLibraryDetail", "Library")',
+                    data: { id: data['LibraryId'] },
+                 success: function (d) {
+                        curModel = d.data;
+                        $('#ifun').val(d.data.Fun);
+                        $('#idoubt').val(d.data.Doubt);
+                        $('#idoubtDesc').val(d.data.DoubtDesc);
+                        $('#isolveWay').val(d.data.ProcessDoubtWay);
+                        $('#selDiff').val(d.data.DifficultyTypeId);
+                        $('#icontributor').val(d.data.Contributor);
+                        $('#cDate').data("DateTimePicker").date(moment(d.data.ContributeDate).format('YYYY-MM-DD'));
+                        $('.modal-title').html('<span class="fa fa-edit"></span> Edit');
+                         InitFileInput(d.paths, d.initialPreviewConfig);
+                         if (d.paths == undefined || d.paths.length == 0) {
+                             $('#spNumber').removeClass('label label-primary');
+                             $('#spNumber').html('');
+                         }
+                         else {
+                             $('#spNumber').addClass('label label-primary');
+                             $('#spNumber').html(" " + d.paths.length);
+                         }
+
+                        $("#myModalMenu").modal("show");
+
+                    }
+                });
+
+        });
+
+        table.on('click', 'button#btnGridRemove', function () {
+            var data = table.row($(this).parents('tr')).data();
+            if (data != null || data != undefined) {
+                if (confirm("是否删除选择的记录？")) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteLibrary", "Library")',
+                        data: { id: data['LibraryId'] },
+                        success: function (d) {
+
+                            switch (d.value) {
+                                case 0:
+                                    alert('删除成功');
+                                    //table.row($(this).parents('tr')).remove().draw(false);
+                                    table.ajax.reload();
+                                    break;
+                                case 1:
+                                case 2:
+                                    alert(d.msg);
+                                    break;
+                                default:
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+
+
+    var fileInputControl = function (ctrlName, uploadUrl, uploadExtraData) {
+        this.ctrlName = ctrlName;
+        this.uploadUrl = uploadUrl;
+        this.uploadExtraData = uploadExtraData;
+    }
+
+
+    function InitFileInput(images,config) {
+        $("#fileinput").off('filepredelete');
+        $("#fileinput").off('filedeleted');
+        $("#fileinput").off('fileuploaded');
+        $("#fileinput").off('filebatchuploadsuccess');
+        $("#fileinput").fileinput('destroy');
+
+        var control = $('#fileinput');
+        if (images == null && config == null) {
+            control.fileinput({
+                showUpload: false,
+                language: 'en',
+                uploadAsync: false,
+                dropZoneEnabled: true,
+                showUploadedThumbs: false,
+                uploadUrl: '@Url.Action("UploadLibraryFiles", "Library")',
+                maxFileCount: 10,
+                maxImageWidth: 300,
+                resizeImage: true,
+                showCaption: true,
+                showPreview: true,
+                overwriteInitial: false,
+                browseClass: "btn btn-primary btn-sm",
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'xls', 'xlsx', 'txt'],
+                enctype: 'multipart/form-data',
+                validateInitialCount: true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                uploadExtraData: function (previewId, index) {   //额外参数的关键点
+                    var obj = {};
+                    obj.LibraryId = curModel.LibraryId;
+                    return obj;
+                }
+            });
+        }
+        else {
+
+            control.fileinput({
+                showUpload: false,
+                language: 'en',
+                uploadAsync: false,
+                dropZoneEnabled: true,
+                showUploadedThumbs: false,
+                uploadUrl: '@Url.Action("UploadLibraryFiles", "Library")',
+                maxFileCount: 10,
+                maxImageWidth: 300,
+                resizeImage: true,
+                showCaption: true,
+                showPreview: true,
+                browseClass: "btn btn-primary btn-sm",
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'xls', 'xlsx', 'txt'],
+                enctype: 'multipart/form-data',
+                validateInitialCount: true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                overwriteInitial: false,
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+                initialPreview: images,
+                initialPreviewConfig: config,
+                //initialPreviewConfig: [
+                //    { caption: "1111.png", size: 827000, width: "120px", url: "/file-upload-batch/2", key: 1 },
+                //    { caption: "123.png", size: 549000, width: "120px", url: "/file-upload-batch/2", key: 2 }],
+                uploadExtraData: function (previewId, index) {   //额外参数的关键点
+                    var obj = {};
+                    obj.LibraryId = curModel.LibraryId;
+                    return obj;
+                }
+            }).on('filedeleted', function (event, key, jqXHR, data) {
+                setTimeout(function () {
+                    if (jqXHR.responseJSON.data.status != 0)
+                        alert(jqXHR.responseJSON.data.errorMsg);
+                    window.alert('File deletion was successful!');
+                }, 900);
+
+
+            });
+        }
+        control.on('filebatchuploadsuccess', function (event, data) {
+            if (data.response) {
+                if (data.response.status == 0) {
+
+                    alert('Save successful.');
+                    $("#myModalMenu").modal("hide");
+
+                    EmptyAllValues();
+                    if (curModel != null)
+                        $('#tbLibrary').DataTable().ajax.reload();
+
+                    //alert('成功');
+                }
+            }
+
+        });
+
+        control.on("fileuploaded", function (event, data) {
+            if (data.response) {
+                if (data.response.status == 0) {
+
+                    alert('Save successful.');
+                    $("#myModalMenu").modal("hide");
+
+                    EmptyAllValues();
+                    if (model.LibraryId != undefined && model.LibraryId != null)
+                        $('#tbLibrary').DataTable().ajax.reload();
+
+                    //alert('成功');
+                }
+            }
+        });
+
+        control.on('filepredelete', function (event, key, jqXHR, data) {
+
+        });
+
+        //control.on('fileremoved', function (event, id, index) {
+        //    var a = 1;
+        //});
+
+
+
+        //$('#btnUpload').on('click', function () {
+
+        //        $("#fileinput").fileinput("upload");
+
+
+        //});
+
+    }
+
+
+
+</script>

@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "MCN Manual";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+    int index = Convert.ToInt32(ViewBag.index);
+
+}
+
+
+<div class="content animate-panel">
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="hpanel panel-group">
+                <div class="panel-body">
+                    <div class="text-center text-muted font-bold"><h3>MCN Manual</h3></div>
+                </div>
+
+
+                <div id="notes" class="collapse">
+
+                    <div class="panel-body note-link">
+                        <a href="#note1" data-toggle="tab">
+                            @*<small class="pull-right text-muted">2018-07-16</small>*@
+                            <h5>1. Freight Module</h5>
+                          
+                        </a>
+                    </div>
+
+                    @*<div class="panel-body note-link">
+                        <a href="#note2" data-toggle="tab">
+
+                            <h5>
+                                2. D/D Module
+                            </h5>
+                           
+                        </a>
+                    </div>*@
+
+                    <div class="panel-body note-link">
+                        <a href="#note2" data-toggle="tab">
+                            @*<small class="pull-right text-muted">2018-07-17</small>*@
+                            <h5>
+                                2. Dept & GM Approve
+                            </h5>
+                          
+                        </a>
+                    </div>
+
+                    <div class="panel-body note-link">
+                        <a href="#note3" data-toggle="tab">
+                            @*<small class="pull-right text-muted">2018-07-17</small>*@
+                            <h5>
+                                3. Doc Assign & Lara Modification
+                            </h5>
+                          
+                        </a>
+                    </div>
+
+                    <div class="panel-body note-link">
+                        <a href="#note4" data-toggle="tab">
+                            @*<small class="pull-right text-muted">2018-07-18</small>*@
+                            <h5>
+                                4. Accounting Dept
+                            </h5>
+         
+                        </a>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="hpanel">
+
+                <div class="panel-body">
+
+
+                    <div class="tab-content">
+                        <div id="note1" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/FreightModuleManual")
+                        </div>
+
+                        @*<div id="note2" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/DDModuleManual")
+                        </div>*@
+
+                        <div id="note2" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/DeptGMApproveManual")
+                        </div>
+
+                        <div id="note3" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/DocAssignManual")
+                        </div>
+
+                        <div id="note4" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/AccountDeptManual")
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="pull-right">
+            <button id="totop" class="btn btn-primary" style="display:none;" title="回顶部">返回顶部</button>
+        </div> 
+    </div>
+
+  
+</div>
+
+
+<script type="text/javascript">
+
+
+  
+ 
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("totop").style.display = "block";
+        } else {
+            document.getElementById("totop").style.display = "none";
+        }
+    }
+    window.onscroll = function () { scrollFunction() };
+
+    $(function () {
+        var index = '@index';
+        if (index != '-1') {
+            $('#note' + index).removeClass();
+            $('#note' + index).addClass('tab-pane active');
+        }
+
+
+     
+
+        var target = 0;
+        $("#totop").on('click', function () {
+            clearInterval(timer);
+            var timer = setInterval(function () {
+                target = document.body.scrollTop;
+                target -= Math.ceil(target / 10);//做减速运动
+                window.scrollTo(0, target);
+                if (target == 0) {
+                    clearInterval(timer);
+                }
+            }, 10);
+        });
+
+
+    });
+
+
+
+
+
+</script>
