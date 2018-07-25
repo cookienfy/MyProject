@@ -10,41 +10,121 @@
     <img class="img-screenshot" src="~/Images/Helper/MCN-FM-1.png" />
     <p>1. 输入你想修改运费的B/L Number回车查询，Vessel/Voyage和该Voyage下相关的BL Number将自动显示在列表中，同时系统将默认选择所查询的BL Number。 </p>
     <img class="img-screenshot" src="~/Images/Helper/MCN-FM-4.png" />
-    <p style="margin-left:10px;font-size:15px;color:darkred;">
-        <i class="fa fa-star"></i> 常见问题解决办法:
-    </p>
+
     <p>
-        <a style="margin-left:40px;" href="#" target="_blank"> 1). 输入BLNo找不到改票的处理方法？</a>
+        2. 根据查询结果得到提单号列表后，进行以下操作。
     </p>
-    <p>
-        2. 单击 "Refresh" 该票提单下面的所有Charge Code都显示下列表中，选择需要修改的ChargeCode点击 ">>"，原始的记录将显示在"Original"栏，修改后的记录将显示在"Correct to"栏。
+    <p style="margin-left:20px;">
+        a. 选择需要修改的BL Number，可以选择多个提单号进行费用修改。对于多收部分MCN的更改，只需要填写实收金额，无需像Lara中做负数，为了抵扣多收部分的操作。
     </p>
+    <p style="margin-left:20px;">
+        b. 选择BL Numbers后，点击"Refresh"，获取已选择的提单下所有相关的Charge Code并显示在列表中。
+    </p>
+    <p style="margin-left:20px;">
+        c. 勾选Charge Codes（此处可以多选），点击 ">>"。
+    </p>
+    <p style="margin-left:20px;">
+        d. 右侧界面会罗列出需要修改的Charge Codes信息（此处以每个ChargeCode为一行）, 原始的记录将显示在"Original"栏，修改后的记录将显示在"Correct to"栏。
+    </p>
+    <p style="margin-left:20px;">
+        e. 在Correct To栏目下，所有的列都能修改，还可以新增ChargeCode和删除原有的ChargeCode。
+    </p>
+
     <img class="img-screenshot" src="~/Images/Helper/MCN-FM-5.png" />
+
+    <p style="margin-left:20px;">
+        f. 批量Delete不需要的记录，打勾"Delete"则字体成红色。
+    </p>
+
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-13.png" />
+
     <p>
-    <p>
-        3. 在Correct To栏目下，所有的列都能修改。操作按钮：
-    </p>
-    <p style="margin-left:20px;">
-        a. MCN Reason -> 选择更改理由，也可以自定义理由到Memo栏。
-    </p>
-    <p style="margin-left:20px;">
-        b. Attachment -> 上传与MCN相关的附件（通常为邮件）
-    </p>
-    <p style="margin-left:20px;">
-        c. Save -> 保存MCN的更改，生成MCN ID
-    </p>
-    <p style="margin-left:20px;">
-        d. Sumbit -> 提交，MCN将进入下一步操作流程
+        3. 操作按钮介绍：
     </p>
     <img class="img-screenshot" src="~/Images/Helper/MCN-FM-6.png" />
     <p style="margin-left:20px;">
-        e. To xls -> 导出MCN到Excel
+        a. MCN Reason -> 选择更改理由(可多选)，也可以自定义理由到Memo栏。
     </p>
-    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-7.png" />
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-8.png" />
     <p style="margin-left:20px;">
-        f. Org. Trace -> 查询原始的操作记录
+        b. Org. Trace -> 原始提单的操作记录。
     </p>
     <p style="margin-left:20px;">
-        g. MCN Trace -> 查询MCN的操作记录
+        c. MCN Trace -> MCN的操作记录。
+    </p>
+    <p style="margin-left:20px;">
+        d. Attachment -> 上传与MCN相关的附件（通常为邮件）。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-9.png" />
+    <p style="margin-left:40px;">
+        d.1 文件上传 -> 点击文件路径("...")，选择需要上传的文件。如果需要上传多个文件，可在文件序号处双击空白的地方进行多文件上传。
+    </p>
+    <p style="margin-left:40px;">
+        d.2 历史记录 -> 查看附件所有增删改的记录。
+    </p>
+    <p style="margin-left:40px;">
+        d.3 浏览 -> 查看每个附件的内容。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-10.png" />
+    <p style="margin-left:40px;">
+        d.4 保存 -> 上传文件确认无误后可以保存。
+    </p>
+    <p style="margin-left:20px;">
+        e. Copy -> 选中记录点击"Copy"。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-11.png" />
+    <p style="margin-left:20px;">
+        f. Paste -> 点击 "Paste"出现之前拷贝的记录。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-12.png" />
+    <p style="margin-left:20px;">
+        g. To File -> 生成MCN的汇总Excel文件，黄色高亮部分为修改过的项目。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-14.png" />
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-15.png" />
+
+    <p style="margin-left:20px;">
+        h. Save -> 保存MCN的更改，生成MCN ID，此时的状态为Draft。
+    </p>
+
+    <p style="margin-left:20px;">
+        i. Sumbit -> 提交，MCN将进入下一步操作流程。
+    </p>
+
+
+
+
+
+    <p style="margin-left:10px;font-size:15px;color:darkred;">
+        <i class="fa fa-star"></i> 常见问题的分享与疑问:
+    </p>
+    <p style="margin-left:20px;">
+        1). 输入BLNo找不到改票的处理方法？
+    </p>
+    <p style="margin-left:60px;">
+        输入提单号，无法查询到该票的原因。
+    </p>
+    <p style="margin-left:80px;">
+        a. 该票可能GSC还未做好运费，运费舱单CSV文件中没有。
+    </p>
+    <p style="margin-left:80px;">
+        b. 拆单，并单的问题，导致该提单号已合并或者被拆分为多个提单号。
+    </p>
+    <p style="margin-left:80px;">
+        如遇此类问题请新增一个需要更改的提单号，提交。
+    </p>
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-16.png" />
+    <img class="img-screenshot" src="~/Images/Helper/MCN-FM-17.png" />
+    <p style="margin-left:20px;">
+        2). MCN数据来源？
+    </p>
+    <p style="margin-left:60px;">
+        当GSC完成print invoice时，可以从Lara中导出运费舱单CSV文件，导入到Accounting Toolkit中，作为MCN的数据来源。
+    </p>
+    <p style="margin-left:20px;">
+        3). 如何对MCN重复更改？
+    </p>
+    <p style="margin-left:60px;">
+        当某票提单号正在走MCN审批流程时，同时又对这票提单做新的MCN申请，此时系统会提示无法操作，因为正在审批，但是如果确实要对这票做更改，那么需要先将这票之前的MCN申请Reject后，在Draft内修改重新提交。
     </p>
 </div>

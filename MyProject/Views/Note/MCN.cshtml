@@ -23,27 +23,17 @@
                         <a href="#note1" data-toggle="tab">
                             @*<small class="pull-right text-muted">2018-07-16</small>*@
                             <h5>1. Freight Module</h5>
-                          
+
                         </a>
                     </div>
 
-                    @*<div class="panel-body note-link">
+                    <div class="panel-body note-link">
                         <a href="#note2" data-toggle="tab">
 
                             <h5>
                                 2. D/D Module
                             </h5>
-                           
-                        </a>
-                    </div>*@
 
-                    <div class="panel-body note-link">
-                        <a href="#note2" data-toggle="tab">
-                            @*<small class="pull-right text-muted">2018-07-17</small>*@
-                            <h5>
-                                2. Dept & GM Approve
-                            </h5>
-                          
                         </a>
                     </div>
 
@@ -51,19 +41,29 @@
                         <a href="#note3" data-toggle="tab">
                             @*<small class="pull-right text-muted">2018-07-17</small>*@
                             <h5>
-                                3. Doc Assign & Lara Modification
+                                3. Dept & GM Approve
                             </h5>
-                          
+
                         </a>
                     </div>
 
                     <div class="panel-body note-link">
                         <a href="#note4" data-toggle="tab">
+                            @*<small class="pull-right text-muted">2018-07-17</small>*@
+                            <h5>
+                                4. Doc Assign & Lara Modification
+                            </h5>
+
+                        </a>
+                    </div>
+
+                    <div class="panel-body note-link">
+                        <a href="#note5" data-toggle="tab">
                             @*<small class="pull-right text-muted">2018-07-18</small>*@
                             <h5>
-                                4. Accounting Dept
+                                5. Accounting Dept
                             </h5>
-         
+
                         </a>
                     </div>
 
@@ -87,28 +87,28 @@
                             @Html.Partial("MCNManual/FreightModuleManual")
                         </div>
 
-                        @*<div id="note2" class="tab-pane">
-                            <div class="pull-right text-muted m-l-lg">
-                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
-                            </div>
-                            @Html.Partial("MCNManual/DDModuleManual")
-                        </div>*@
-
                         <div id="note2" class="tab-pane">
                             <div class="pull-right text-muted m-l-lg">
                                 <img src="~/Images/cma.png" style="margin-top:-20px;" />
                             </div>
-                            @Html.Partial("MCNManual/DeptGMApproveManual")
+                            @Html.Partial("MCNManual/DDModuleManual")
                         </div>
 
                         <div id="note3" class="tab-pane">
                             <div class="pull-right text-muted m-l-lg">
                                 <img src="~/Images/cma.png" style="margin-top:-20px;" />
                             </div>
-                            @Html.Partial("MCNManual/DocAssignManual")
+                            @Html.Partial("MCNManual/DeptGMApproveManual")
                         </div>
 
                         <div id="note4" class="tab-pane">
+                            <div class="pull-right text-muted m-l-lg">
+                                <img src="~/Images/cma.png" style="margin-top:-20px;" />
+                            </div>
+                            @Html.Partial("MCNManual/DocAssignManual")
+                        </div>
+
+                        <div id="note5" class="tab-pane">
                             <div class="pull-right text-muted m-l-lg">
                                 <img src="~/Images/cma.png" style="margin-top:-20px;" />
                             </div>
@@ -123,57 +123,96 @@
         </div>
 
 
-        <div class="pull-right">
-            <button id="totop" class="btn btn-primary" style="display:none;" title="回顶部">返回顶部</button>
-        </div> 
+        <a href="#top" id="back-to-top1">返回首页</a>
+
+
     </div>
 
-  
+
 </div>
 
+<style type="text/css">
+    #back-to-top1 {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 20px;
+        display: none;
+        border: 1px solid transparent;
+        color: #ffffff;
+        background-color: #34495e;
+        border-color: #34495e;
+        border-radius: 2px;
+    }
+</style>
 
 <script type="text/javascript">
-
-
-  
- 
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("totop").style.display = "block";
+    $(document).bind('scroll', function () {
+        var len = $(this).scrollTop();
+        if (len >= 100) {
+            $("#back-to-top1").show();
         } else {
-            document.getElementById("totop").style.display = "none";
+            $("#back-to-top1").hide();
         }
-    }
-    window.onscroll = function () { scrollFunction() };
-
-    $(function () {
-        var index = '@index';
-        if (index != '-1') {
-            $('#note' + index).removeClass();
-            $('#note' + index).addClass('tab-pane active');
-        }
-
-
-     
-
-        var target = 0;
-        $("#totop").on('click', function () {
-            clearInterval(timer);
-            var timer = setInterval(function () {
-                target = document.body.scrollTop;
-                target -= Math.ceil(target / 10);//做减速运动
-                window.scrollTo(0, target);
-                if (target == 0) {
-                    clearInterval(timer);
-                }
-            }, 10);
-        });
-
-
     });
 
 
-
+    $("#back-to-top1").on('click', function () {
+        clearInterval(timer);
+        var timer = setInterval(function () {
+            target = document.body.scrollTop;
+            target -= Math.ceil(target / 100);//做减速运动
+            window.scrollTo(0, target);
+            if (target == 0) {
+                clearInterval(timer);
+            }
+        }, 10);
+    });
 
 
 </script>
+@*<script type="text/javascript">
+
+
+
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("totop").style.display = "block";
+            } else {
+                document.getElementById("totop").style.display = "none";
+            }
+        }
+        window.onscroll = function () { scrollFunction() };
+
+        $(function () {
+            var index = '@index';
+            if (index != '-1') {
+                $('#note' + index).removeClass();
+                $('#note' + index).addClass('tab-pane active');
+            }
+
+
+
+
+            var target = 0;
+            $("#totop").on('click', function () {
+                clearInterval(timer);
+                var timer = setInterval(function () {
+                    target = document.body.scrollTop;
+                    target -= Math.ceil(target / 10);//做减速运动
+                    window.scrollTo(0, target);
+                    if (target == 0) {
+                        clearInterval(timer);
+                    }
+                }, 10);
+            });
+
+
+        });
+
+
+
+
+
+    </script>*@

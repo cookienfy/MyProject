@@ -10,6 +10,7 @@ using MyProject.DAL;
 using MyProject.DAL.EF;
 using System.Linq;
 using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
 
 namespace MyProject.Tests
 {
@@ -108,8 +109,14 @@ namespace MyProject.Tests
         [TestMethod]
         public void AddNewTest()
         {
+            using (System.Data.Entity.Core.EntityClient.EntityConnection entity = new System.Data.Entity.Core.EntityClient.EntityConnection("MyProjectEF1"))
+            {
+                entity.Open();
+                EntityCommand cmd = entity.CreateCommand();
+                cmd.CommandText = @"select doubt d from uLibrary as d where d.";
+            }
+       
 
-            
 
 
             MyProjectEF mp = new MyProjectEF();
@@ -300,6 +307,9 @@ namespace MyProject.Tests
             UnitOfWork unitOfWork = new UnitOfWork();
             var aa = unitOfWork.UserRepository.Query(null, null);
         }
+
+
+
 
     }
 }

@@ -53,6 +53,9 @@ namespace MyProject.App_Start
             bundles.Add(new ScriptBundle("~/bundles/jqueryui/js").Include(
                       "~/Vendor/jquery-ui/jquery-ui.min.js"));
 
+            bundles.Add(new StyleBundle("~/bundles/font-awesome/css").Include(
+                    "~/Vendor/fontawesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
+
             // Vue.js
             bundles.Add(new ScriptBundle("~/bundles/Vue/js").Include(
                       "~/Vendor/Vue/Vue.js"));

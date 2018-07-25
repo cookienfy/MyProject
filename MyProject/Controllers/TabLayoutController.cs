@@ -13,5 +13,11 @@ namespace MyProject.Controllers
         {
             return View();
         }
+
+        public ActionResult TabsLayout()
+        {
+            return View();
+        }
+
     }
 }

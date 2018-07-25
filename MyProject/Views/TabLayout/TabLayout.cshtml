@@ -40,6 +40,7 @@
     @System.Web.Optimization.Scripts.Render("~/bundles/Vue/js")
     @System.Web.Optimization.Scripts.Render("~/bundles/homer/js")
     @System.Web.Optimization.Scripts.Render("~/bundles/moment/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryui/js")
 
 
     @System.Web.Optimization.Scripts.Render("~/bundles/newdatetimepicker/js")
@@ -93,6 +94,8 @@
                 showBorder: false,
                 expandIcon: 'glyphicon glyphicon-chevron-right',
                 collapseIcon: 'glyphicon glyphicon-chevron-down',
+                onhoverColor: '#f0f8ff',
+                selectedBackColor: '#34495e',
                 data: getTree1()
             });
 

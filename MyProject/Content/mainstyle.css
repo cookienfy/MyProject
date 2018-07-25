@@ -2337,6 +2337,7 @@ body.fullscreen-panel-mode {
 .nav-tabs > li.active > a:focus {
     border: 1px solid #e4e5e7;
     border-bottom-color: transparent;
+    background-color: #f0f8ff;
 }
 
 .nav-tabs {
@@ -4156,7 +4157,7 @@ ul.h-list {
 }
 
     .spinner > div {
-        background-color: #62cb31;
+        background-color: #34495e;
         height: 100%;
         width: 8px;
         display: inline-block;
