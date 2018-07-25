@@ -3438,7 +3438,7 @@
     <Content Include="Views\System\ModalMenu.cshtml" />
     <Content Include="Views\System\User.cshtml" />
     <Content Include="Views\Shared\_LayoutBlank.cshtml" />
-    <Content Include="Views\TabLayout\TabLayout.cshtml" />
+    <Content Include="Views\TabLayout\TabsLayout.cshtml" />
     <Content Include="Views\System\Account.cshtml" />
     <Content Include="Views\System\ModalAccount.cshtml" />
     <Content Include="Views\Home\InfoCenter.cshtml" />
@@ -3451,7 +3451,8 @@
     <Content Include="Views\Note\MCNManual\DeptGMApproveManual.cshtml" />
     <Content Include="Views\Note\MCNManual\DocAssignManual.cshtml" />
     <Content Include="Views\Note\MCNManual\AccountDeptManual.cshtml" />
-    <Content Include="Views\TabLayout\TabsLayout.cshtml" />
+    <Content Include="Views\TabLayout\TabsLayout_Demo.cshtml" />
+    <Content Include="Views\TabLayout\TabLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

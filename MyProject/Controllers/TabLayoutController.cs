@@ -19,5 +19,10 @@ namespace MyProject.Controllers
             return View();
         }
 
+        public ActionResult TabsLayout_Demo()
+        {
+            return View();
+        }
+
     }
 }

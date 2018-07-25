@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title</title>
+
+    @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>*@
+
+    @*<link href='http://fonts.font.im/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>*@
+    <!--Customize global font size* -->
+    @*@System.Web.Optimization.Styles.Render("~/bundles/MyMain/css")*@
+
+    <!-- Primary vendor style -->
+    @System.Web.Optimization.Styles.Render("~/bundles/font-awesome/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/animate/css")
+    <link rel="stylesheet" href="~/Vendor/bootstrap/dist/css/bootstrap.css" />
+    @*@System.Web.Optimization.Styles.Render("~/bundles/bootstrap/css")*@
+    @System.Web.Optimization.Styles.Render("~/bundles/peicon7stroke/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/newdatetimepicker/css")
+    @System.Web.Optimization.Styles.Render("~/bundles/treeview/css")
+
+
+    <link rel="stylesheet" href="~/Content/MyMain.css" />
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @*@if (IsSectionDefined("Styles"))
+        {@RenderSection("Styles", required: false)}*@
+
+    <!-- Primary HOMER style -->
+    @System.Web.Optimization.Styles.Render("~/bundles/homer/css")
+
+
+
+    <!-- Section for main scripts render -->
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Vue/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/homer/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/moment/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryui/js")
+
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/newdatetimepicker/js")
+    @System.Web.Optimization.Scripts.Render("~/bundles/treeview/js")
+
+
+
+    <!-- Handler for local scripts -->
+    @*@RenderSection("scripts", required: false)*@
+
+
+    @*<style>
+
+            body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+                font-size: 12px;
+                line-height: 1;
+            }
+
+            .dataTableLayout {
+                table-layout: fixed;
+                width: 100%;
+            }
+        </style>*@
+</head>
+
+
+<body>
+    <!--内容部分-->
+    <div class="qb-content-wrapper">
+        <div class="qb-content">
+            <!--当前位置-->
+            <div class="currentLocation clearfix">
+                <span class="pull-left">产品管理 &gt; 产品制作</span>
+                <div class="nav-btn pull-right">
+                    <input id="btnAdd" type="button" class="btn btn-info" value="桌面">
+                    <input type="button" class="btn btn-info returnBtn" value="返回">
+                </div>
+            </div>
+            <!--主要内容-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <ul id="tabTitle" class="nav nav-tabs"></ul>
+                        <!-- Tab panes -->
+                        <div id="tabContent" class="tab-content">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var names = ['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff', 'ggg', 'jjj'];
+        var count = 0;
+
+
+        function RemoveTab() {
+
+        }
+
+        $(function () {
+
+            $('#btnAdd').on('click', function () {
+                var tabTitle = $('#tabTitle');
+                var tabContent = $('#tabContent');
+                var text = 'Tab' + count;
+                var value = 'tab_' + count;
+
+                //While adding the tab, foreach li remove class.
+                tabTitle.find('li').each(function (i) {
+                    if ($(this).hasClass('active'))
+                        $(this).removeClass();
+                });
+
+                //1. Remove div class is 'tab-pane fade in active'.
+                //2. Adding no actice class is 'tab-pane fade'
+                tabContent.find('div').each(function () {
+                    if ($(this).hasClass('tab-pane fade in active')) {
+                        $(this).removeClass();
+                        $(this).addClass('tab-pane fade');
+                    }
+                });
+
+                //<a href='#id'> this Id must be matched with div id. If id will not be matched, then li can not be navigated to div content.
+                var tempTitle = '<li class="active" >' +
+                    '<a href="#' + value + '" aria-controls="' + value + '" tabindex="-1" role="tab" data-toggle="tab">' + text +
+                    '<i id="close' + value + '" class="fa fa-remove tab-close"></i></a></li>';
+                tabTitle.append(tempTitle);
+                var tempContext = ' <div role="tabpanel" class="tab-pane fade in active" id="' + value + '">' + text + '</div >';
+                tabContent.append(tempContext);
+
+
+                $('#close' + value).one('click', function () {
+
+                    //if (!confirm('Do you want to remove this tab?'))
+                    //    return;
+
+                    //先判断当前要关闭的tab选项卡有没有active类，再判断当前选项卡是否最后一个，如果是则给前一个选项卡以及内容添加active，否则给下一个添加active类
+                    var gParent = $(this).parent().parent(),
+                        parent = $(this).parent();
+                    if (gParent.hasClass('active')) {
+                        if (gParent.prev().index() > -1) {
+                            gParent.prev().addClass('active');
+                            $(parent.attr('href')).prev().addClass('tab-pane fade in active');
+                        } else if (gParent.next().index() > -1) {
+                            gParent.next().addClass('active');
+                            $(parent.attr('href')).next().addClass('tab-pane fade in active');
+                        } 
+                    }
+                    gParent.remove();
+                    $(parent.attr('href')).remove();
+                });
+                count += 1;
+
+            });
+
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                //$(this).addClass('spanActive')
+                e.target // 激活的标签页
+                e.relatedTarget // 前一个激活的标签页
+            })
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+                e.target // 激活的标签页
+                //  $(e.relatedTarget).removeClass(); // 前一个激活的标签页
+
+            })
+
+        });
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

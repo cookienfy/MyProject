@@ -65,55 +65,78 @@
             }
         </style>*@
 </head>
-
-
 <body>
-    <!--内容部分-->
-    <div class="qb-content-wrapper">
-        <div class="qb-content">
-            <!--当前位置-->
-            <div class="currentLocation clearfix">
-                <span class="pull-left">产品管理 &gt; 产品制作</span>
-                <div class="nav-btn pull-right">
-                    <input id="btnAdd" type="button" class="btn btn-info" value="桌面">
-                    <input type="button" class="btn btn-info returnBtn" value="返回">
-                </div>
-            </div>
-            <!--主要内容-->
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <ul id="tabTitle" class="nav nav-tabs"></ul>
-                        <!-- Tab panes -->
-                        <div id="tabContent" class="tab-content">
 
-                        </div>
+
+
+    <div id="header">
+        @Html.Partial("_Header")
+    </div>
+
+    <aside id="menu">
+        @Html.Partial("_Navigation")
+    </aside>
+    <div id="wrapper">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <ul id="tabTitle" class="nav nav-tabs"></ul>
+                    <!-- Tab panes -->
+                    <div id="tabContent" class="tab-content">
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+        @*<div id="Selector"></div>*@
+
+
+        <!-- Footer-->
+        @Html.Partial("_Footer")
     </div>
-
-
-
     <script type="text/javascript">
-        var names = ['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff', 'ggg', 'jjj'];
-        var count = 0;
 
-
-        function RemoveTab() {
-
-        }
+        var _curPageLink = '';
 
         $(function () {
 
-            $('#btnAdd').on('click', function () {
+            var tree = $('#tree').treeview({
+                enableLinks: false,
+                showBorder: false,
+                expandIcon: 'glyphicon glyphicon-chevron-right',
+                collapseIcon: 'glyphicon glyphicon-chevron-down',
+                onhoverColor: '#f0f8ff',
+                selectedBackColor: '#34495e',
+                data: getTree1()
+            });
+
+            tree.on('nodeSelected', function (event, data) {
+                if (data.href == _curPageLink) {
+                    if (data.isOpen) {
+                        window.open(data.href, '_blank');
+                        return;
+                    } else 
+                        return;
+                }
+
+                if (data.href == '#')
+                    return;
+                _curPageLink = data.href;
+
+                if (data.isOpen) {
+                    window.open(data.href, '_blank');
+                    return;
+                }
+
                 var tabTitle = $('#tabTitle');
                 var tabContent = $('#tabContent');
-                var text = 'Tab' + count;
-                var value = 'tab_' + count;
 
-                //While adding the tab, foreach li remove class.
+                var text = data.text;
+                var value = 'tab_' + data.id;
+
                 tabTitle.find('li').each(function (i) {
                     if ($(this).hasClass('active'))
                         $(this).removeClass();
@@ -128,7 +151,6 @@
                     }
                 });
 
-                //<a href='#id'> this Id must be matched with div id. If id will not be matched, then li can not be navigated to div content.
                 var tempTitle = '<li class="active" >' +
                     '<a href="#' + value + '" aria-controls="' + value + '" tabindex="-1" role="tab" data-toggle="tab">' + text +
                     '<i id="close' + value + '" class="fa fa-remove tab-close"></i></a></li>';
@@ -152,37 +174,141 @@
                         } else if (gParent.next().index() > -1) {
                             gParent.next().addClass('active');
                             $(parent.attr('href')).next().addClass('tab-pane fade in active');
-                        } 
+                        }
                     }
                     gParent.remove();
                     $(parent.attr('href')).remove();
                 });
-                count += 1;
+
+                $('#' + value).html(wattingDialog());
+
+                setTimeout(function () {
+                    $.ajax({
+                        url: data.href,
+                        type: "Post",
+                        success: function (data) {
+                            $('#' + value).html('');
+                            $('#' + value).html(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Loading failed：" + errorThrown);
+                            $('#' + value).html('');
+                        }
+                    });
+                }, 1);
+
 
             });
 
-            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                //$(this).addClass('spanActive')
-                e.target // 激活的标签页
-                e.relatedTarget // 前一个激活的标签页
-            })
-
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-                e.target // 激活的标签页
-                //  $(e.relatedTarget).removeClass(); // 前一个激活的标签页
-
-            })
-
-        });
 
 
+            //$('#btnAdd').on('click', function () {
+            //    var tabTitle = $('#tabTitle');
+            //    var tabContent = $('#tabContent');
+            //    var text = 'Tab' + count;
+            //    var value = 'tab_' + count;
+
+            //    //While adding the tab, foreach li remove class.
+            //    tabTitle.find('li').each(function (i) {
+            //        if ($(this).hasClass('active'))
+            //            $(this).removeClass();
+            //    });
+
+            //    //1. Remove div class is 'tab-pane fade in active'.
+            //    //2. Adding no actice class is 'tab-pane fade'
+            //    tabContent.find('div').each(function () {
+            //        if ($(this).hasClass('tab-pane fade in active')) {
+            //            $(this).removeClass();
+            //            $(this).addClass('tab-pane fade');
+            //        }
+            //    });
+
+            //    //<a href='#id'> this Id must be matched with div id. If id will not be matched, then li can not be navigated to div content.
+            //    var tempTitle = '<li class="active" >' +
+            //        '<a href="#' + value + '" aria-controls="' + value + '" tabindex="-1" role="tab" data-toggle="tab">' + text +
+            //        '<i id="close' + value + '" class="fa fa-remove tab-close"></i></a></li>';
+            //    tabTitle.append(tempTitle);
+            //    var tempContext = ' <div role="tabpanel" class="tab-pane fade in active" id="' + value + '">' + text + '</div >';
+            //    tabContent.append(tempContext);
 
 
+            //    $('#close' + value).one('click', function () {
+
+            //        //if (!confirm('Do you want to remove this tab?'))
+            //        //    return;
+
+            //        //先判断当前要关闭的tab选项卡有没有active类，再判断当前选项卡是否最后一个，如果是则给前一个选项卡以及内容添加active，否则给下一个添加active类
+            //        var gParent = $(this).parent().parent(),
+            //            parent = $(this).parent();
+            //        if (gParent.hasClass('active')) {
+            //            if (gParent.prev().index() > -1) {
+            //                gParent.prev().addClass('active');
+            //                $(parent.attr('href')).prev().addClass('tab-pane fade in active');
+            //            } else if (gParent.next().index() > -1) {
+            //                gParent.next().addClass('active');
+            //                $(parent.attr('href')).next().addClass('tab-pane fade in active');
+            //            }
+            //        }
+            //        gParent.remove();
+            //        $(parent.attr('href')).remove();
+            //    });
+            //    count += 1;
+
+            //});
+
+        })
+
+        function getTree1() {
+            var json = @Html.Raw(MyProject.Helpers.TreeMenuHelper.GetMenuJson());
+            return json;
+        }
 
 
+        //Demo data
+        function getTree() {
+            var data = [
+                {
+                    text: "Parent 1",
+                    nodes: [
+                        {
+                            text: "Child 1",
+                            icon: "fa fa-credit-card",
+                            nodes: [
+                                {
+                                    text: "Grandchild",
+                                    icon: "fa fa-credit-card",
+                                    href: '@Url.Action("Menu", "system")'
+                                },
+                                {
+                                    text: "Grandchild 2"
+                                }
+                            ],
+                            state: {
+                                "checked": false, "disabled": false, "expanded": true, "selected": false
+                            }
+                        },
+                        {
+                            text: "Child 2"
+                        }
+                    ]
+                },
+                {
+                    text: "Parent 2"
+                },
+                {
+                    text: "Parent 3"
+                },
+                {
+                    text: "Parent 4"
+                },
+                {
+                    text: "Parent 5"
+                }
+            ];
+            // Some logic to retrieve, or generate tree structure
+            return data;
+        }
 
     </script>
 </body>
-
 </html>
