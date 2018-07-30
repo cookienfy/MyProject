@@ -2694,6 +2694,7 @@
     <Content Include="Vendor\sweetalert\sweetalert.gif" />
     <Content Include="Vendor\toastr\build\toastr.min.css" />
     <Content Include="Vendor\toastr\build\toastr.min.js" />
+    <Content Include="Vendor\Vue\vue-router.js" />
     <Content Include="Vendor\Vue\vue.js" />
     <Content Include="Vendor\Vue\vue.min.js" />
     <Content Include="Vendor\xeditable\bootstrap3-editable\css\bootstrap-editable.css" />

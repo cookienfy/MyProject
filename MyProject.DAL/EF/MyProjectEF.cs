@@ -5,7 +5,7 @@ namespace MyProject.DAL.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class MyProjectEF : DbContext
+    public partial class MyProjectEF : DbContext, IDbContext
     {
         public MyProjectEF()
             : base("name=MyProjectEF1")

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,7 +15,9 @@ namespace MyProject.DAL
     public class Repository<T> : IRepository<T>, IDisposable where T : class
     {
 
-        private DbContext _db;
+        private IDbContext _db;
+
+        protected ObjectSet<T> _objectSet;
 
         public virtual DbSet<T> DbSet { get; set; }
 
@@ -22,16 +26,19 @@ namespace MyProject.DAL
             CreateConnection();
         }
 
-        public Repository(DbContext db)
+        public Repository(IDbContext db)
         {
             this._db = db;
             DbSet = _db.Set<T>();
+
+            _objectSet = ((IObjectContextAdapter)db).ObjectContext.CreateObjectSet<T>();
         }
 
         private void CreateConnection()
         {
             _db = new EF.MyProjectEF();
             DbSet = _db.Set<T>();
+            _objectSet = ((IObjectContextAdapter)_db).ObjectContext.CreateObjectSet<T>();
         }
 
         public virtual T Add(T model)
@@ -61,7 +68,10 @@ namespace MyProject.DAL
         public void Dispose()
         {
             if (_db != null)
+            {
                 _db.Dispose();
+                _db = null;
+            }
         }
 
         public virtual IEnumerable<T> Query(Expression<Func<T, bool>> expWhere, Expression<Func<T, IOrderedQueryable>> expOrder = null)
@@ -81,15 +91,20 @@ namespace MyProject.DAL
 
     }
 
-    public class FunctionRepository : Repository<uFunction>
+    public class FunctionRepository : Repository<uFunction>, IFunctionRepository
     {
-        public FunctionRepository(DbContext db) : base(db) { }
+        public FunctionRepository(IDbContext db) : base(db) { }
+    }
+
+    public interface IFunctionRepository : IRepository<uFunction>
+    {
+
     }
 
 
     public class CodeRepository : Repository<uCode>
     {
-        public CodeRepository(DbContext db) : base(db)
+        public CodeRepository(IDbContext db) : base(db)
         {
 
         }
@@ -97,7 +112,7 @@ namespace MyProject.DAL
 
     public class LibraryRepository : Repository<uLibrary>
     {
-        public LibraryRepository(DbContext db) : base(db)
+        public LibraryRepository(IDbContext db) : base(db)
         {
 
         }
@@ -105,7 +120,7 @@ namespace MyProject.DAL
 
     public class ContextRepository : Repository<uContext>
     {
-        public ContextRepository(DbContext db) : base(db)
+        public ContextRepository(IDbContext db) : base(db)
         {
 
         }
@@ -113,7 +128,7 @@ namespace MyProject.DAL
 
     public class UserRepository : Repository<uUser>
     {
-        public UserRepository(DbContext db) : base(db)
+        public UserRepository(IDbContext db) : base(db)
         {
 
         }

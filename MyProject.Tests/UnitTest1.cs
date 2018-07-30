@@ -160,29 +160,30 @@ namespace MyProject.Tests
         [TestMethod]
         public void QueryTest()
         {
-            using (var db = new MyProjectEF())
+            using (UnitOfWork work = new UnitOfWork())
             {
-                var list = db.uFunctions.Join(db.uCodes,
-                      function => function.FunTypeId,
-                      code => code.CodeId,
-                      (f, c) => new
-                      {
-                          f.FunId,
-                          f.FunName,
-                          f.FunLink,
-                          f.FunDesc,
-                          f.FunParentId,
-                          f.FunTypeId,
-                          FunType = c.Code,
-                          f.FunSeq,
-                          f.CreationDate,
-                          f.LCV
-                      });
+                var list = work.FunctionRepository.DbSet.Join(work.CodeRepository.DbSet,
+                       function => function.FunTypeId,
+                       code => code.CodeId,
+                       (f, c) => new
+                       {
+                           f.FunId,
+                           f.FunName,
+                           f.FunLink,
+                           f.FunDesc,
+                           f.FunParentId,
+                           f.FunTypeId,
+                           FunType = c.Code,
+                           f.FunSeq,
+                           f.CreationDate,
+                           f.LCV
+                       });
                 foreach (var l in list)
                 {
                     Console.Write(l);
                 }
             }
+          
 
         }
 

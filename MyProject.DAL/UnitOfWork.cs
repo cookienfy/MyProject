@@ -9,7 +9,7 @@ namespace MyProject.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private DbContext _db;
+        private IDbContext _dbContext;
 
         private CodeRepository _codeRepository;
         private LibraryRepository _libraryRepository;
@@ -20,58 +20,48 @@ namespace MyProject.DAL
 
         public UnitOfWork()
         {
-            _db = new EF.MyProjectEF();
-            _codeRepository = new CodeRepository(_db);
-            _functionRepository = new FunctionRepository(_db);
-            _userRepository = new UserRepository(_db);
-            _libraryRepository = new LibraryRepository(_db);
-            _contextRepository = new ContextRepository(_db);
+            _dbContext = new EF.MyProjectEF();
         }
 
         public DbContext DB { get; set; }
 
         public CodeRepository CodeRepository
         {
-            get => _codeRepository;
-            set => _codeRepository = value;
+            get => _codeRepository ?? new CodeRepository(_dbContext);
         }
 
         public FunctionRepository FunctionRepository
         {
-            get => _functionRepository;
-            set => _functionRepository = value;
+            get => _functionRepository ?? new FunctionRepository(_dbContext);
         }
 
         public UserRepository UserRepository
         {
-            get => _userRepository;
-            set => _userRepository = value;
+            get => _userRepository ?? new UserRepository(_dbContext);
         }
 
         public LibraryRepository LibraryRepository
         {
-            get => _libraryRepository;
-            set => _libraryRepository = value;
+            get => _libraryRepository ?? new LibraryRepository(_dbContext);
         }
 
         public ContextRepository ContextRepository
         {
-            get => _contextRepository;
-            set => _contextRepository = value;
+            get => _contextRepository ?? new ContextRepository(_dbContext);
         }
 
         public void Dispose()
         {
-            if (_db != null)
+            if (_dbContext != null)
             {
-                _db.Dispose();
+                _dbContext.Dispose();
             }
         }
 
         public void SaveChanges()
         {
-            if (_db != null)
-                _db.SaveChanges();
+            if (_dbContext != null)
+                _dbContext.SaveChanges();
         }
 
     }
