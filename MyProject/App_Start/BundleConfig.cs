@@ -266,13 +266,14 @@ namespace MyProject.App_Start
 
             // File upload
             bundles.Add(new StyleBundle("~/bundles/fileinput/css").Include(
-                      "~/Vendor/bootstrap-fileinput-master/css/fileinput.min.css"));
+                      "~/Vendor/bootstrap-fileinput/css/fileinput.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/fileinput/js").Include(
-                     "~/Vendor/bootstrap-fileinput-master/js/fileinput.js",
-                     "~/Vendor/bootstrap-fileinput-master/js/plugins/piexif.min.js",
-                     "~/Vendor/bootstrap-fileinput-master/js/plugins/purify.min.js",
-                     "~/Vendor/bootstrap-fileinput-master/js/plugins/sortable.min.js"));
+                     "~/Vendor/bootstrap-fileinput/js/fileinput.js",
+                     "~/Vendor/bootstrap-fileinput/js/plugins/piexif.min.js",
+                     "~/Vendor/bootstrap-fileinput/js/plugins/purify.min.js",
+                     "~/Vendor/bootstrap-fileinput/js/plugins/sortable.min.js",
+                     "~/Vendor/bootstrap-fileinput/js/plugins/polyfill.min.js"));
 
 
             //jqGrid

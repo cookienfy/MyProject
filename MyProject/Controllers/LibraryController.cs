@@ -108,7 +108,7 @@ namespace MyProject.Controllers
                 if (contexts.Count() > 0)
                 {
                     string folder = Request.MapPath("UploadFolder".GetWebKeyValue());
-        
+
                     folder = folder.Replace("\\Library", "");
                     if (!System.IO.Directory.Exists(folder))
                         System.IO.Directory.CreateDirectory(folder);
@@ -121,15 +121,42 @@ namespace MyProject.Controllers
                             System.IO.File.WriteAllBytes(fullname, c.Content);
                         System.IO.FileInfo info = new System.IO.FileInfo(fullname);
 
-                        lsPath.Add(string.Format(imgHtml, string.Format("UploadFiles/{0}", c.FileName)));
-                        lsObj.Add(new
+                        switch (info.Extension)
                         {
-                            caption = c.FileName,
-                            size = info.Length,
-                            width = "300px",
-                            url = "/Library/DeleteImage",
-                            key = c.ContextId
-                        });
+                            case ".xlsx":
+                            case ".xls":
+                            case ".doc":
+                            case ".docx":
+                                lsPath.Add(string.Format("UploadFiles/{0}", c.FileName));
+                                lsObj.Add(new
+                                {
+                                    type = "office",
+                                    caption = c.FileName,
+                                    size = info.Length,
+                                    width = "300px",
+                                    url = "/Library/DeleteImage",
+                                    downloadUrl = string.Format("/UploadFiles/{0}", c.FileName),
+                                    key = c.ContextId
+                                });
+                                break;
+                            case ".png":
+                            case ".jpg":
+                            case ".gif":
+                                lsPath.Add(string.Format(imgHtml, string.Format("UploadFiles/{0}", c.FileName)));
+                                lsObj.Add(new
+                                {
+                                    caption = c.FileName,
+                                    size = info.Length,
+                                    width = "300px",
+                                    url = "/Library/DeleteImage",
+                                    key = c.ContextId
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+
+
                     }
                 }
 
